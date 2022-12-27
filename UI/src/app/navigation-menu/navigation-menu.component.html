@@ -1,22 +1,22 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/">Home</a></li>
-        <li class="dropdown" *ngIf="navCondition.dashboard">
+      <!-- <ul class="nav navbar-nav"> -->
+        <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/">Home</a></button>
+        <div class="dropdown" *ngIf="navCondition.dashboard">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Menu <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/Dashboard">Dashboard</a></li>
-            <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/Profile">Profile</a></li>
-            <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/#">Sign off</a></li>
+            <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/Dashboard">Dashboard</a></button>
+            <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/Profile">Profile</a></button>
+            <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/#">Sign off</a></button>
           </ul>
-        </li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/login" *ngIf="navCondition.sign">Sign in</a></li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/Sign-up" *ngIf="navCondition.sign">Sign up</a></li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/Topics" *ngIf="navCondition.topics">Topics</a></li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/#">Contact Details</a></li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/#">About Me</a></li>
-      </ul>
+        </div>
+        <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/login" *ngIf="navCondition.sign">Sign in</a></button>
+        <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/Sign-up" *ngIf="navCondition.sign">Sign up</a></button>
+        <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/Topics" *ngIf="navCondition.topics">Topics</a></button>
+        <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/#">Contact Details</a></button>
+        <button routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/#">About Me</a></button>
+      <!-- </ul> -->
     </div>
   </div>
 </nav>
