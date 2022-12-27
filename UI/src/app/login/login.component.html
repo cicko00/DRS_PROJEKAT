@@ -1,0 +1,36 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+      <b>Log in Page</b> <br/><br/>  
+  
+
+      <!-- Sign up Page -->
+
+      <form class="navbar-form navbar" role="search" #form="ngForm" (ngSubmit)="passVal(form)">
+      <table border='0'>
+        <tr>
+          <td>Username</td>
+          <td><div class="input-group">
+              <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ngModel required name="username">
+          </div></td>
+          <td>Password</td>
+          <td><input type="password" class="form-control" ngModel required name="password"></td>
+        </tr>
+
+        <tr>
+            <td><button type="submit" class="btn btn-primary">
+                Submit
+              </button></td>
+            <td><button type="reset" class="btn btn-primary">
+                Clear
+              </button></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div class="alert alert-success" role="alert" [style.display]="sucessMessage">Success</div>
+    <div class="alert alert-danger" role="alert" [style.display]="errorMessage">{{errorMsg}}</div>
+
+  </form>
+      <!-- Sign up Page //-->
+  </div>
