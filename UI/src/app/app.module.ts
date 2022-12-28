@@ -11,13 +11,15 @@ import { NavigationServiceService } from './services/navigation-service.service'
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    NavigationMenuComponent
+    NavigationMenuComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

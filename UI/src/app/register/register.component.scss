@@ -1,0 +1,59 @@
+.div1{
+    margin: auto;
+    margin-top: 50px;
+    width: 400px;
+    height:550px;
+    background-color: black;;
+    
+
+    border-radius: 50% / 10%;
+
+}
+
+.div1::before{
+    top: 10%;
+    bottom: 10%;
+    right: -5%;
+    left: -5%;
+    background: inherit;
+    border-radius: 5% / 50%;
+}
+
+.h21{
+    text-align: center;
+    color: gold;
+    margin-top: 5px;
+}
+.line1{
+    width:350px;
+    height: 4px;
+    background-color: gold;
+    margin-left: 20px;
+
+}
+.line2{
+    width:350px;
+    height: 4px;
+    background-color: gold;
+    margin-left: 20px; 
+    margin-top: 400px;  
+
+}
+.h31{
+    color: white;
+    margin-left: 40px;
+    margin-top: 40px;
+    float: left;
+    clear: both;
+    text-align: right;
+}
+.input1{
+    float: right;
+    margin-top: 40px;
+    text-align: left;
+    margin-right: 60px;
+    background-color: black;
+    border-radius: 1px;
+    border-color: white;
+    color: gold;
+}
