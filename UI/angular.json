@@ -31,11 +31,11 @@
               "src/manifest.json"
             ],
             "styles": [
-              "src/styles.scss",
-              "bootswatch/dist/minty/bootstrap.min.css"
+              "src/styles.scss"
+              
             ],
             "scripts": [
-              "bootstrap/dist/js/bootstrap.min.js"
+              
             ]
           },
           "configurations": {
@@ -98,11 +98,11 @@
               "src/manifest.json"
             ],
             "styles": [
-              "src/styles.scss",
-              "bootswatch/dist/minty/bootstrap.min.css"
+              "src/styles.scss"
+              
             ],
             "scripts": [
-              "bootstrap/dist/js/bootstrap.min.js"
+              
             ]
           }
         }
