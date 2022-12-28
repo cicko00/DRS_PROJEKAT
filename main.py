@@ -17,4 +17,8 @@ def login():
     return jsonify(users)
 
 
+@app.route('/register', methods=['post'])
+def register():
+    return jsonify(users)
+
 app.run()
