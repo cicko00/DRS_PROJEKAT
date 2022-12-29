@@ -12,6 +12,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { RegisterComponent } from './register/register.component';
+import { ChangeDataComponent } from './change-data/change-data.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RegisterComponent } from './register/register.component';
     LoginComponent,
     HomeComponent,
     NavigationMenuComponent,
-    RegisterComponent
+    RegisterComponent,
+    ChangeDataComponent
   ],
   imports: [
     BrowserModule,
