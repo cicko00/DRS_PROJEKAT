@@ -1,7 +1,7 @@
 .div1{
     margin: auto;
     margin-top: 50px;
-    width: 400px;
+    width: 650px;
     height:550px;
     background-color: black;;
 
@@ -21,38 +21,61 @@
 .h21{
     text-align: center;
     color: gold;
-    margin-top: 5px;
 }
 .line1{
-    width:350px;
+    width:600px;
     height: 4px;
     background-color: gold;
     margin-left: 20px;
 
 }
 .line2{
-    width:350px;
+    width:600px;
     height: 4px;
     background-color: gold;
     margin-left: 20px; 
-    margin-top: 400px;  
+    margin-top: 80px;  
 
 }
 .h31{
     color: white;
     margin-left: 40px;
-    margin-top: 40px;
+    margin-top: 30px;
     float: left;
     clear: both;
     text-align: right;
 }
 .input1{
     float: right;
-    margin-top: 40px;
+    margin-top: 30px;
     text-align: left;
     margin-right: 60px;
     background-color: black;
     border-radius: 1px;
     border-color: white;
     color: gold;
+}
+.button1{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 30px;
+    text-align: center;
+    background-color: black;
+    border-radius: 5px;
+    border-color: white;
+    color: gold;
+}
+.button1-pom{
+    margin-right: 5px;
+}
+.button1-pom2{
+    margin-left: 5px;
+}
+.table-pom{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }

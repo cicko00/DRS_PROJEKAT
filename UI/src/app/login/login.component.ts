@@ -22,16 +22,16 @@ export class LoginComponent implements OnInit {
 
   passVal($f: NgForm) {
     console.log($f.value)
-    if (!$f.value.password || !$f.value.username) {
+    if (!$f.value.password || !$f.value.email) {
       this.errorMessage = 'block';
       this.sucessMessage = 'none';
       this.errorMsg = 'Both Password and Username are required.!';
     }
-    if ($f.value.password && $f.value.username) {
-      if ($f.value.username === 'test' && $f.value.password === 'test') {
+    if ($f.value.password && $f.value.email) {
+      if ($f.value.email === 'test' && $f.value.password === 'test') {
         this.errorMessage = 'none';
         this.sucessMessage = 'block';
-        this.route.navigateByUrl('/Dashboard');
+        this.route.navigateByUrl('/home');
       } else {
         this.errorMessage = 'block';
         this.sucessMessage = 'none';
