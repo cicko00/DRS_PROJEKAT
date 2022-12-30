@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +20,12 @@ export class NavigationServiceService {
    home(): Observable<User[]>{
     const users = this.http.get<User[]>('http://127.0.0.1:5000/home');
     return users;
+   }
+   tryRegister(user:User){
+    return this.http.post<User>('http://127.0.0.1:5000/register',user);
+   }
+   tryLogin(user:User){
+    return this.http.post('http://127.0.0.1:5000/login',JSON.stringify(user));
    }
    showLogin() {
     this.dashboard = true;

@@ -16,6 +16,7 @@ users = [ { 'username': 'milos', 'password':'milos'}]
 
 @app.route('/home', methods=['get'])
 def home():
+    print("testtest")
     return jsonify(users)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -23,8 +24,15 @@ def login():
     return jsonify(users)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['POST'])
 def register():
-    return jsonify(users)
+    if(request.method=="POST"):
+       print(request.form, flush=True)
+       user=request.json 
+       print(user['username'])
+       print("test")
+       return{"data":"ok","redirect":"/login"},200;
+    
+
 
 app.run()

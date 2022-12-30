@@ -13,6 +13,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { RegisterComponent } from './register/register.component';
 import { ChangeDataComponent } from './change-data/change-data.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { ChangeDataComponent } from './change-data/change-data.component';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     // AngularMultiSelectModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),

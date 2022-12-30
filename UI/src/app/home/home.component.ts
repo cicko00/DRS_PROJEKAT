@@ -10,6 +10,7 @@ import { NavigationServiceService } from '../services/navigation-service.service
 export class HomeComponent {
   constructor(private navService: NavigationServiceService) {}
   users: User [] = [];
+  
   ngOnInit(): void {
     this.home();
   }
