@@ -21,11 +21,11 @@ export class NavigationServiceService {
     const users = this.http.get<User[]>('http://127.0.0.1:5000/home');
     return users;
    }
-   tryRegister(user:User){
-    return this.http.post<User>('http://127.0.0.1:5000/register',user);
+   tryRegister(user:User):Observable<User>{
+    return this.http.post<any>('http://127.0.0.1:5000/register',user);
    }
    tryLogin(user:User){
-    return this.http.post('http://127.0.0.1:5000/login',JSON.stringify(user));
+    return this.http.post('http://127.0.0.1:5000/login',user);
    }
    showLogin() {
     this.dashboard = true;

@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     console.log(this.users.username);
     this.users.username=this.form.value.username as string;
     this.users.password=this.form.value.password as string;
-    this.navCondition.tryRegister(this.users);
+    this.navCondition.tryRegister(this.users).subscribe(s=>{});
 
   }
   
