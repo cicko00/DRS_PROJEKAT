@@ -13,7 +13,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class RegisterComponent implements OnInit {
   users:User={
     username: '',
-    password: ''
+    password: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    country: '',
+    email: '',
+    phoneNumber: ''
   };
   
   
@@ -29,13 +35,20 @@ export class RegisterComponent implements OnInit {
 
 
   form=this.formbuilder.group(
-    {username:'',password:''}
+    {username:'',password:'',firstName:'',lastName:'',address:'',country:'',email:'',phoneNumber:''}
   );
   
   sendRegisterData(): void{
     console.log(this.users.username);
     this.users.username=this.form.value.username as string;
     this.users.password=this.form.value.password as string;
+    this.users.address=this.form.value.address as string;
+    this.users.country=this.form.value.country as string;
+    this.users.email=this.form.value.email as string;
+    this.users.firstName=this.form.value.firstName as string;
+    this.users.lastName=this.form.value.lastName as string;
+    this.users.phoneNumber=this.form.value.phoneNumber as string;
+
     this.navCondition.tryRegister(this.users).subscribe(s=>{});
 
   }
