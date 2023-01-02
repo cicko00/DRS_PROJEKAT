@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 
 CORS(app)
-
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db")
+##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"
+database = create_connection("D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db")
 users = [ { 'username': 'milos', 'password':'milos'}]
 cursor=database.cursor()
 ##cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (4,'Emilija','Balaz','Kikinda','Srbija','emily','nestonamadjarskom','brojtelefona','emiliabalazs.ki@gmail.com')""")
@@ -46,10 +46,13 @@ def register():
         
        cursor.execute("SELECT COALESCE(MAX(id),0) FROM user")
        database.commit()
-       oldid=cursor.fetchall
+       oldid=cursor.fetchone()   
+       ##oldid = str(oldid[0]) 
+       ##oldid = int(oldid)
+       newid = oldid[0] + 1
     
 
-       cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (?,?,?,?,?,?,?,?,?)""",(1,user['firstName'],user['lastName'],user['address'],user['country'],user['username'],user['password'],user['phoneNumber'],user['email']))
+       cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (?,?,?,?,?,?,?,?,?)""",(newid,user['firstName'],user['lastName'],user['address'],user['country'],user['username'],user['password'],user['phoneNumber'],user['email']))
        database.commit()
 
 
