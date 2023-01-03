@@ -28,7 +28,16 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return jsonify(users)
+  if request.method=="POST":
+        user=request.get_json();
+        cursor.execute("""SELECT username,password from user""")
+        database.commit()
+        db_list=cursor.fetchall()
+        for i in db_list:
+            if(i[0]==user['username'] and i[1]==user['password']):
+                ##session["ulogovani_korisnik"]=i
+                return jsonify("TRUE")
+        return jsonify("FALSE")
 
 
 @app.route('/register', methods=['POST','GET'])
