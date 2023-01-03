@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
 
@@ -21,9 +21,18 @@ export class NavigationServiceService {
     const users = this.http.get<User[]>('http://127.0.0.1:5000/home');
     return users;
    }
-   tryRegister(user:User):Observable<User>{
+   tryRegister(user:User){
     return this.http.post<any>('http://127.0.0.1:5000/register',user);
    }
+
+   registerGetResponse(): Observable<string>{
+
+    const answer= this.http.get<string>('http://127.0.0.1:5000/register');
+    return answer;
+   }
+
+
+
    tryLogin(user:User){
     return this.http.post('http://127.0.0.1:5000/login',user);
    }
