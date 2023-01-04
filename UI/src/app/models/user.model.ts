@@ -11,7 +11,12 @@ export interface User {
     phoneNumber:string;
 
 
+
    
     
 }
 
+export interface User_login{
+    username: string;
+    password: string;
+}
