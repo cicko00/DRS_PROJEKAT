@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable,of } from 'rxjs';
 import { NavigationServiceService } from '../services/navigation-service.service';
 
 @Component({
@@ -8,10 +9,23 @@ import { NavigationServiceService } from '../services/navigation-service.service
 })
 export class NavigationMenuComponent implements OnInit {
 
-  constructor(public navCondition: NavigationServiceService) {}
+  constructor(public navsrv:NavigationServiceService) {}
+  
+  
+   
+
+   
+
+
+ 
+
+  
+
   
   ngOnInit() {
     
+
   }
+  
 
 }

@@ -2,13 +2,13 @@
     <h1 class="h11">FORUM</h1>
     
   
-    <button class="but1" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/login" *ngIf="navCondition.sign">Log In</a></button>
-    <button class="but1" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/register" *ngIf="navCondition.sign">Register</a></button>
-    <button class="but1" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/" *ngIf="navCondition.sign">Log Out</a></button>
-    <button class="but2" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/change-data" *ngIf="navCondition.sign">My Profile</a></button>
-    <button class="but2" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/" *ngIf="navCondition.sign">My Posts</a></button>
-    <button class="but2" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/" *ngIf="navCondition.sign">Interests</a></button>
-    <button class="but2" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/home" *ngIf="navCondition.sign">Home</a></button>
+    <button class="but1" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/login" *ngIf="navsrv.LoginStatus">Log In</a></button>
+    <button class="but1" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/register" *ngIf="navsrv.LoginStatus">Register</a></button>
+    <button class="but1" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/" *ngIf="!navsrv.LoginStatus">Log Out</a></button>
+    <button class="but2" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/change-data" *ngIf="!navsrv.LoginStatus">My Profile</a></button>
+    <button class="but2" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/" *ngIf="!navsrv.LoginStatus">My Posts</a></button>
+    <button class="but2" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/" *ngIf="!navsrv.LoginStatus">Interests</a></button>
+    <button class="but2" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}><a routerLink="/home">Home</a></button>
 </div>
     
 

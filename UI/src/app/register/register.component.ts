@@ -4,6 +4,7 @@ import { NavigationServiceService } from '../services/navigation-service.service
 import { FormBuilder } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from "@angular/router";
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class RegisterComponent implements OnInit {
     email: '',
     phoneNumber: ''
   };
+  
   
   
 
