@@ -13,7 +13,7 @@ app.secret_key="lollollol"
 CORS(app)
 ##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"
 ##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db")
+database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db")
 users = [ { 'username': 'milos', 'password':'milos'}]
 cursor=database.cursor()
 ##cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (4,'Emilija','Balaz','Kikinda','Srbija','emily','nestonamadjarskom','brojtelefona','emiliabalazs.ki@gmail.com')""")

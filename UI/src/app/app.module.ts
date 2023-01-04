@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { ChangeDataComponent } from './change-data/change-data.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(),
     // AngularMultiSelectModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
