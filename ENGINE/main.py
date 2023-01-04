@@ -5,11 +5,14 @@ from create_database import create_connection
 from flask_cors import CORS
 from Models.User import User,ListToDict
 import sqlite3
+import sqlalchemy
+
 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.secret_key="lollollol"
+
 CORS(app)
 ##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"
 ##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"
@@ -26,10 +29,13 @@ def home():
     sys.stdout.flush()
     return jsonify(users)
 
-@app.route('/profile', methods=['get'])
+@app.route('/profile', methods=['get','post'])
 def profile():
+   
+    user=session["ulogovani_korisnik"]
     
-    return jsonify(session["ulogovani_korisnik"])
+   
+    return jsonify(user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -41,9 +47,10 @@ def login():
         db_list=cursor.fetchall()
         for i in db_list:
             if(i[5]==user['username'] and i[6]==user['password']):
+                session.permanent=True
                 session["ulogovani_korisnik"]=ListToDict(i)
-                
-                
+                sys.stdout.flush()
+               
                 return jsonify("TRUE")
         return jsonify("FALSE")
 

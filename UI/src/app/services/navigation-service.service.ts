@@ -18,6 +18,12 @@ export class NavigationServiceService {
     const users = this.http.get<User[]>('http://127.0.0.1:5000/home');
     return users;
    }
+
+   getUserProfile(): Observable<User>{
+    const user = this.http.get<User>('http://127.0.0.1:5000/profile');
+    return user;
+   }
+
    tryRegister(user:User){
     return this.http.post<any>('http://127.0.0.1:5000/register',user);
    }
