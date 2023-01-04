@@ -3,13 +3,13 @@ import time
 from flask import jsonify,request, Flask,session
 from create_database import create_connection
 from flask_cors import CORS
-from Models.User import User
+from Models.User import User,ListToDict
 import sqlite3
 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-
+app.secret_key="lollollol"
 CORS(app)
 ##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"
 ##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"
@@ -26,16 +26,24 @@ def home():
     sys.stdout.flush()
     return jsonify(users)
 
+@app.route('/profile', methods=['get'])
+def profile():
+    
+    return jsonify(session["ulogovani_korisnik"])
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   if request.method=="POST":
         user=request.get_json();
-        cursor.execute("""SELECT username,password from user""")
+        cursor.execute("""SELECT * from user""")
         database.commit()
         db_list=cursor.fetchall()
         for i in db_list:
-            if(i[0]==user['username'] and i[1]==user['password']):
-                ##session["ulogovani_korisnik"]=i
+            if(i[5]==user['username'] and i[6]==user['password']):
+                session["ulogovani_korisnik"]=ListToDict(i)
+                
+                
                 return jsonify("TRUE")
         return jsonify("FALSE")
 

@@ -14,6 +14,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { RegisterComponent } from './register/register.component';
 import { ChangeDataComponent } from './change-data/change-data.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     NavigationMenuComponent,
     RegisterComponent,
-    ChangeDataComponent
+    ChangeDataComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
