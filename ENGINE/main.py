@@ -1,23 +1,35 @@
+import os
 import sys
 import time
-from flask import jsonify,request, Flask,session
+from flask import jsonify,request, Flask,session,current_app
 from create_database import create_connection
 from flask_cors import CORS
 from Models.User import User,ListToDict
+from flask_session import Session
 import sqlite3
 import sqlalchemy
+import jwt
+import security
 
 
 
 app = Flask(__name__)
-app.config['DEBUG'] = True
-app.secret_key="lollollol"
 
+app.config['DEBUG'] = True
+app.config["SESSION_TYPE"]='filesystem'
+app.config["SESSION_PERMANENT"]=True
+app.config["PERMANENT_SESSION_LIFETIME"]=1000
+app.config["SECRET_KEY"]="SECRET_KEY"
+
+
+Session(app)
 CORS(app)
-##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"
-##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"
-database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db")
+##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"                                           --Cvijetin
+##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"       --Emilija
+##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
+database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db")
 users = [ { 'username': 'milos', 'password':'milos'}]
+app.secret_key="hhhhhh"
 cursor=database.cursor()
 ##cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (4,'Emilija','Balaz','Kikinda','Srbija','emily','nestonamadjarskom','brojtelefona','emiliabalazs.ki@gmail.com')""")
 ##cursor.execute("""DROP TABLE user""")
@@ -31,11 +43,13 @@ def home():
 
 @app.route('/profile', methods=['get','post'])
 def profile():
-   
-    user=session["ulogovani_korisnik"]
+   user=security.token_required(database,app.config["SECRET_KEY"])
+  
     
+   print(user)
+   sys.stdout.flush()
    
-    return jsonify(user)
+   return jsonify(user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -45,20 +59,29 @@ def login():
         cursor.execute("""SELECT * from user""")
         database.commit()
         db_list=cursor.fetchall()
+        userr={}
         for i in db_list:
             if(i[5]==user['username'] and i[6]==user['password']):
-                session.permanent=True
-                session["ulogovani_korisnik"]=ListToDict(i)
-                sys.stdout.flush()
+              cursor.execute("""UPDATE user SET loggedIn='Y'WHERE username=?""",(user['username']))
+              database.commit()
+              userr["token"] = jwt.encode(
+                    {"id": i[0]},
+                    app.config["SECRET_KEY"],
+                    algorithm="HS256"
+                )
+              return jsonify(userr);
+
+                
+                
+                
                
-                return jsonify("TRUE")
+                
         return jsonify("FALSE")
 
 
 @app.route('/register', methods=['POST','GET'])
 def register():
-    i=False
-    resp="ooooo"
+    
     if request.method=="POST":
        
        user=request.get_json()
@@ -79,7 +102,7 @@ def register():
        newid = oldid[0] + 1
     
 
-       cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (?,?,?,?,?,?,?,?,?)""",(newid,user['firstName'],user['lastName'],user['address'],user['country'],user['username'],user['password'],user['phoneNumber'],user['email']))
+       cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email,loggedIn) VALUES (?,?,?,?,?,?,?,?,?,?)""",(newid,user['firstName'],user['lastName'],user['address'],user['country'],user['username'],user['password'],user['phoneNumber'],user['email'],'N'))
        database.commit()
        print("user:"+user['username']+"  pasword:"+user['password'])
        sys.stdout.flush()

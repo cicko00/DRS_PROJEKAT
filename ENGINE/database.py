@@ -4,7 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db'
+
+#'sqlite:///C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db'         --MILOS
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -19,6 +22,7 @@ class User(db.Model):
     password = db.Column(db.String(50))
     phoneNumber = db.Column(db.String(50))
     email = db.Column(db.String(100), unique=True)
+    loggedIn=db.Column(db.String(1))
     topics = db.relationship('Topic', backref='user')
 
 class Topic(db.Model):

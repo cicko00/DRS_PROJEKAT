@@ -1,14 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, observable, Observable,of } from 'rxjs';
 import { User, User_login } from '../models/user.model';
 
 
-@Injectable({
-  providedIn: 'root'
-})
-export class NavigationServiceService {
+@Injectable(
+  {providedIn:'root'}
+)
+export class NavigationServiceService  {
  
+  
+
+
   LoginStatus:boolean;
   
   constructor( private http: HttpClient) {

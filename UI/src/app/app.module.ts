@@ -16,6 +16,10 @@ import { ChangeDataComponent } from './change-data/change-data.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { ToastrModule } from 'ngx-toastr';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { interceptorHTTP } from './services/interceptorHTTP.service';
+
 
 
 @NgModule({
@@ -39,8 +43,20 @@ import { ToastrModule } from 'ngx-toastr';
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot(),
+    
+    
+   
+    FormsModule,
+    
+    
   ],
-  providers: [],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:interceptorHTTP,
+      multi:true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

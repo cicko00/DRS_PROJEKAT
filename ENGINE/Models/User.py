@@ -30,7 +30,8 @@ def ListToDict(list):
         "username":list[5],
         "password":list[6],
         "phoneNumber":list[7],
-        "email":list[8]
+        "email":list[8],
+        "loggedIn":list[9],
     }
     return dict
 

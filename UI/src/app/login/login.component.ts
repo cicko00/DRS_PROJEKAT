@@ -44,11 +44,17 @@ export class LoginComponent implements OnInit {
       
       if ((s as string) == "FALSE"){
         window.alert("Invalid username or password!");
+        this.nav.showLogin();
+        
+        
+
+
         
       }
-      else if((s as string)=="TRUE"){
+      else if((s as string)!="TRUE"){
         window.alert("Succes!")
-        
+        sessionStorage.setItem('token',s['token'])
+       
         this.route.navigate(["/home"]);
         this.nav.showNoLogin();
       }
