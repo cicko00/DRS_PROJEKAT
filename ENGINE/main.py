@@ -46,8 +46,7 @@ def profile():
    user=security.token_required(database,app.config["SECRET_KEY"])
   
     
-   print(user)
-   sys.stdout.flush()
+   
    
    return jsonify(user)
 
@@ -55,14 +54,14 @@ def profile():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   if request.method=="POST":
-        user=request.get_json();
+        user=request.get_json()
         cursor.execute("""SELECT * from user""")
         database.commit()
         db_list=cursor.fetchall()
         userr={}
         for i in db_list:
             if(i[5]==user['username'] and i[6]==user['password']):
-              cursor.execute("""UPDATE user SET loggedIn='Y'WHERE username=?""",(user['username']))
+              cursor.execute("""UPDATE user SET loggedIn='Y'WHERE username=?""",(user['username'],))
               database.commit()
               userr["token"] = jwt.encode(
                     {"id": i[0]},
@@ -108,6 +107,11 @@ def register():
        sys.stdout.flush()
        return jsonify("Succes!")
            
-   
+@app.route('/logout', methods=['GET', 'POST'])
+def logout(): 
+  user=security.token_required(database,app.config["SECRET_KEY"])
+  cursor.execute("""UPDATE user SET loggedIn='N'WHERE username=?""",(user['username'],))
+  database.commit()
+  return jsonify('TRUE')
 
 app.run()

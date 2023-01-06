@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
 @Component({
@@ -7,11 +8,26 @@ import { NavigationServiceService } from '../services/navigation-service.service
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  constructor(private nav:NavigationServiceService){}
- user!: User;
+  constructor(private nav:NavigationServiceService,private router:Router){}
+ user!: any;
  
   ngOnInit(){
-    this.nav.getUserProfile().subscribe(x=>{this.user=x})
+    
+    this.nav.getUserProfile().subscribe(x=>{
+      this.user=x;
+      if(this.user=="FALSE"){
+        this.nav.showLogin();
+        this.router.navigate(["/home"])
+        
+      }
+      else{
+          this.nav.showNoLogin()
+        } 
+    
+    })
+    
+    
+    
     
   }
 }

@@ -15,7 +15,7 @@ def token_required(database,secretkey):
             print("TOKEEN:"+token)
             sys.stdout.flush()
         if token==None:
-            return "FALSE no token"
+            return "FALSE"
                 
             
         
@@ -30,14 +30,14 @@ def token_required(database,secretkey):
         sys.stdout.flush()
         for i in db_list:
             if(i[0]==data["id"]):
-                 print("NASO SAM GA")
+                 
                  sys.stdout.flush()
                  current_user=ListToDict(i)
                  return (current_user)
               
             
         if current_user is None:
-          return "FALSE no user"
+          return "FALSE"
                 
             #if current_user["loggedIn"]=="N":
                 #return "FALSE"

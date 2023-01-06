@@ -35,6 +35,10 @@ export class NavigationServiceService  {
     return this.http.post<any>('http://127.0.0.1:5000/login',user);
    }
 
+   tryLogout(){
+    return this.http.post<any>('http://127.0.0.1:5000/logout',"");
+   }
+
    showLogin():void{
     this.LoginStatus=true;
    }

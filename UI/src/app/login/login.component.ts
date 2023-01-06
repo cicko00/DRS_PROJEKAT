@@ -47,13 +47,15 @@ export class LoginComponent implements OnInit {
         this.nav.showLogin();
         
         
+        
 
 
         
       }
-      else if((s as string)!="TRUE"){
+      else if((s as string)!="FALSE"){
         window.alert("Succes!")
         sessionStorage.setItem('token',s['token'])
+        
        
         this.route.navigate(["/home"]);
         this.nav.showNoLogin();

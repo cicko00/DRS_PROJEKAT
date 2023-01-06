@@ -19,6 +19,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { interceptorHTTP } from './services/interceptorHTTP.service';
+import { LogoutComponent } from './logout/logout.component';
 
 
 
@@ -30,7 +31,8 @@ import { interceptorHTTP } from './services/interceptorHTTP.service';
     NavigationMenuComponent,
     RegisterComponent,
     ChangeDataComponent,
-    ProfileComponent
+    ProfileComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
