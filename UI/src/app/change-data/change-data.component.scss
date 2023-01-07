@@ -59,8 +59,8 @@
     margin-top: 30px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 200px;
+   
+    width: 100px;
     height: 30px;
     text-align: center;
     background-color: black;
@@ -68,14 +68,27 @@
     border-color: white;
     color: gold;
 }
+.button1:hover{
+    background-color: gold;
+    color:black
+
+}
 .button1-pom{
     margin-right: 5px;
 }
 .button1-pom2{
     margin-left: 5px;
 }
+.button1-pom3{
+    margin-left: 5px;
+    margin-right: 100px;
+}
+
 .table-pom{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+}
+
+#a_class{
+    color:gold
 }

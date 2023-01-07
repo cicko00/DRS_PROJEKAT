@@ -1,0 +1,33 @@
+.button1{
+    background: black;
+    color:gold;
+    text-decoration:none;
+}
+
+.button1:hover{
+    background:gold;
+    color:black;
+    text-decoration:none;
+}
+.button2{
+    background: black;
+    color:gold;
+    text-decoration:none;
+}
+
+.button2:hover{
+    background:gold;
+    color:black;
+    text-decoration:none;
+}
+
+.a_link{
+    text-decoration: none;
+    color:gold
+}
+.a_link:hover{
+    text-decoration: none;
+    color:black;
+    background-color: gold;
+
+}
