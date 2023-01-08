@@ -18,9 +18,9 @@ export class NavigationServiceService  {
   constructor( private http: HttpClient) {
     this.LoginStatus=true;
    }
-   home(): Observable<User[]>{
-    const users = this.http.get<User[]>('http://127.0.0.1:5000/home');
-    return users;
+   home(): Observable<Post[]>{
+    const posts = this.http.get<Post[]>('http://127.0.0.1:5000/home');
+    return posts;
    }
 
    getUserProfile(): Observable<User>{
@@ -57,7 +57,13 @@ export class NavigationServiceService  {
     return this.http.post<any>('http://127.0.0.1:5000/change-data',user);
    }
 
-  
+  tryLike(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/like',id)
+  }
+
+  tryDislike(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/dislike',id)
+  }
 
 
  

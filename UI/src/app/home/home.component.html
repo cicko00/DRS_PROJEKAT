@@ -11,3 +11,15 @@
 <button *ngIf="loggedIn" class="buttonADD"  (click)="ShowAddPost()">Add new post</button>
 
 <app-add-post *ngIf="show"></app-add-post>
+
+<ul class="posts">
+    <li class="list" *ngFor="let post of posts">
+      <table class="post_table">
+        <tr><td colspan="3" class="author">@{{post.user}}</td></tr>
+        <tr><th colspan="3">{{post.title}}</th></tr>
+        <tr><td class="spacing_1"></td></tr>
+        <tr><td  colspan="3">{{post.description}}</td></tr>
+        <tr><td  class="author"><input class="butImg" type="image" src="../../assets/likebutton.png" (click)="likePost(post.id);post.likes=post.likes+1;"></td><td class="author" >{{post.likes-post.dislikes}} </td><td  class="author"><input class="butImg" type="image" src="../../assets/dislikebutton.png" (click)="dislikePost(post.id);post.dislikes=post.dislikes+1;"></td><td class="author" style="width: 20px;"><input class="butImg" type="image"  src="../../assets/comment.png" ></td></tr>
+      </table>
+    </li>
+  </ul>

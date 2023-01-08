@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Post } from '../models/post.model';
@@ -9,11 +9,14 @@ import { NavigationServiceService } from '../services/navigation-service.service
   templateUrl: './add-post.component.html',
   styleUrls: ['./add-post.component.scss']
 })
-export class AddPostComponent {
+export class AddPostComponent implements OnInit {
+  username:any;
 
   posts:Post={
+    id:0,
     title:'',
     description:'',
+    user:'',
     likes:0,
     dislikes:0
     
@@ -21,6 +24,9 @@ export class AddPostComponent {
   
 
   constructor(public navCondition: NavigationServiceService,private formbuilder:FormBuilder,private router: Router) {}
+  ngOnInit():void  {
+    
+  }
 
 
   form=this.formbuilder.group(

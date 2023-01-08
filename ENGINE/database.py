@@ -24,6 +24,7 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True)
     loggedIn=db.Column(db.String(1))
     topics = db.relationship('Topic', backref='user')
+    
 
 class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -5,6 +5,7 @@ from flask import jsonify,request, Flask,session,current_app
 from create_database import create_connection
 from flask_cors import CORS
 from Models.User import User,ListToDict
+from Models.Post import Post,ListToDictPost
 from flask_session import Session
 import sqlite3
 import sqlalchemy
@@ -39,14 +40,51 @@ cursor=database.cursor()
 
 @app.route('/home', methods=['get'])
 def home():
-    print("testtest")
-    sys.stdout.flush()
-    return jsonify(users)
+    cursor.execute("select * from topic")
+    database.commit()
+    postsRAW=cursor.fetchall()
+    allPosts=[]
+ 
+    for post in postsRAW:
+      cursor.execute("select username from user WHERE id=?",(post[5],))
+      database.commit()
+      id=cursor.fetchone()
+      allPosts.append(ListToDictPost(post,id[0]))
+
+
+    
+
+    return jsonify(allPosts)
 
 @app.route('/profile', methods=['get','post'])
 def profile():
    user=security.token_required(database,app.config["SECRET_KEY"])
    
+   return jsonify(user) 
+
+
+@app.route('/like', methods=['get','post'])
+def like():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+   
+   id=request.get_json()
+   cursor.execute("""UPDATE topic SET likes=likes+1 where id=?""",(int(id),))
+   database.commit()
+
+
+
+   return jsonify(user) 
+
+@app.route('/dislike', methods=['get','post'])
+def dislike():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+   
+   id=request.get_json()
+   cursor.execute("""UPDATE topic SET dislikes=dislikes+1 where id=?""",(int(id),))
+   database.commit()
+
+
+
    return jsonify(user) 
 
 
@@ -142,5 +180,9 @@ def addpost():
 
 
   return jsonify('TRUE')
+
+
+
+
 
 app.run()

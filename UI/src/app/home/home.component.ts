@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Post } from '../models/post.model';
 import { User } from '../models/user.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
 
@@ -9,21 +10,25 @@ import { NavigationServiceService } from '../services/navigation-service.service
 })
 export class HomeComponent {
   constructor(private navService: NavigationServiceService) {}
-  users: User[]  = [];
+  posts:Post[]=[]
   
   ngOnInit(): void {
     this.navService.getUserProfile().subscribe(x=>{
       this.msg=x;
       if(this.msg!="FALSE"){
         this.loggedIn=true;
+        this.navService.showNoLogin()
       }
+
+      this.home()
+
      });
   }
   home(): void{
     this.navService.home()
     .subscribe(x => {
       console.log(x);
-      this.users = x;
+      this.posts = x;
     })
   }
 
@@ -38,6 +43,18 @@ export class HomeComponent {
     else{
       this.show=true;
     }
+  }
+
+  likePost(id:number){
+    this.navService.tryLike(id).subscribe();
+    
+    
+  }
+
+  dislikePost(id:number){
+    this.navService.tryDislike(id).subscribe()
+    
+    
   }
 
 
