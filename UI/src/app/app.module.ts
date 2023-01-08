@@ -20,6 +20,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { interceptorHTTP } from './services/interceptorHTTP.service';
 import { LogoutComponent } from './logout/logout.component';
+import { MyPostsComponent } from './my-posts/my-posts.component';
+import { AddPostComponent } from './add-post/add-post.component';
 
 
 
@@ -32,7 +34,9 @@ import { LogoutComponent } from './logout/logout.component';
     RegisterComponent,
     ChangeDataComponent,
     ProfileComponent,
-    LogoutComponent
+    LogoutComponent,
+    MyPostsComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,

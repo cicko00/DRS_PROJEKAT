@@ -12,7 +12,12 @@ export class HomeComponent {
   users: User[]  = [];
   
   ngOnInit(): void {
-    this.home();
+    this.navService.getUserProfile().subscribe(x=>{
+      this.msg=x;
+      if(this.msg!="FALSE"){
+        this.loggedIn=true;
+      }
+     });
   }
   home(): void{
     this.navService.home()
@@ -21,5 +26,19 @@ export class HomeComponent {
       this.users = x;
     })
   }
+
+  msg:any;
+  show:boolean=false;
+  loggedIn:boolean=false;
+
+  ShowAddPost(){
+    if(this.show==true){
+      this.show=false;
+    }
+    else{
+      this.show=true;
+    }
+  }
+
 
 }

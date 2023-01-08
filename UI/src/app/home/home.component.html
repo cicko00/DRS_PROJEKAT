@@ -1,5 +1,5 @@
 <!-- <p>Hellooo {{ User.username}}</p> -->
-<ul class="users">
+<!--<ul class="users">
     <li *ngFor="let User of users">
         <span class="badge">{{User.username}}</span> {{User.password}}
         <span class="badge">{{User.username}}</span> {{User.password}}
@@ -7,3 +7,7 @@
         
     </li>
 </ul>
+-->
+<button *ngIf="loggedIn" class="buttonADD"  (click)="ShowAddPost()">Add new post</button>
+
+<app-add-post *ngIf="show"></app-add-post>

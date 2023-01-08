@@ -10,13 +10,10 @@ export interface User {
     email:string;
     phoneNumber:string;
 
-
-
-   
-    
 }
 
 export interface User_login{
     username: string;
     password: string;
 }
+

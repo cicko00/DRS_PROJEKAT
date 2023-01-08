@@ -22,11 +22,13 @@ app.config["PERMANENT_SESSION_LIFETIME"]=1000
 app.config["SECRET_KEY"]="SECRET_KEY"
 
 
-Session(app)
+
 CORS(app)
 ##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"                                           --Cvijetin
 ##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"       --Emilija
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
+##
+
 database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db")
 users = [ { 'username': 'milos', 'password':'milos'}]
 app.secret_key="hhhhhh"
@@ -44,11 +46,22 @@ def home():
 @app.route('/profile', methods=['get','post'])
 def profile():
    user=security.token_required(database,app.config["SECRET_KEY"])
+   
+   return jsonify(user) 
+
+
+@app.route('/change-data', methods=['get','post'])
+def changeData():
+  user=security.token_required(database,app.config["SECRET_KEY"])
+  user_update=request.get_json()
+  cursor.execute("""UPDATE user SET firstName=?,lastName=?,username=?,password=?,country=?,address=?,email=?,phoneNumber=?WHERE id=?""",(user_update['firstName'],user_update['lastName'],user_update['username'],user_update['password'],user_update['country'],user_update['address'],user_update['email'],user_update['phoneNumber'],user['id'],))
+
+  database.commit()
   
-    
+  return jsonify("TRUE")
+
+
    
-   
-   return jsonify(user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -112,6 +125,22 @@ def logout():
   user=security.token_required(database,app.config["SECRET_KEY"])
   cursor.execute("""UPDATE user SET loggedIn='N'WHERE username=?""",(user['username'],))
   database.commit()
+  return jsonify('TRUE')
+
+@app.route('/add-post', methods=['GET', 'POST'])
+def addpost(): 
+  user=security.token_required(database,app.config["SECRET_KEY"])
+  cursor.execute("SELECT COALESCE(MAX(id),0) FROM topic")
+  database.commit()
+  oldid=cursor.fetchone()   
+  newid = oldid[0] + 1
+  
+  newPost=request.get_json()
+  cursor.execute("""INSERT OR REPLACE INTO  topic (id,title,description,likes,dislikes,user_id) VALUES (?,?,?,?,?,?)""",(newid,newPost['title'],newPost['description'],newPost['likes'],newPost['dislikes'],user['id']))
+  database.commit()
+
+
+
   return jsonify('TRUE')
 
 app.run()
