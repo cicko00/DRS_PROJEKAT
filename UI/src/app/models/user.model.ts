@@ -9,11 +9,13 @@ export interface User {
     password: string;
     email:string;
     phoneNumber:string;
+    likedTopic:[];
+    unlikedTopic:[];
 
 }
 
 export interface User_login{
-    username: string;
+    email: string;
     password: string;
 }
 

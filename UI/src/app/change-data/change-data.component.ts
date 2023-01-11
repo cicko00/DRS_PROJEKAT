@@ -18,7 +18,9 @@ export class ChangeDataComponent implements OnInit{
     address: '',
     country: '',
     email: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    likedTopic:[],
+    unlikedTopic:[],
   };
   
   
@@ -88,6 +90,10 @@ export class ChangeDataComponent implements OnInit{
       return;
     }
 
+    this.users.likedTopic=this.user.likedTopic;
+
+    this.users.unlikedTopic=this.user.unlikedTopic;
+
     
 
     this.navCondition.tryChangeData(this.users).subscribe(s=>{
@@ -113,7 +119,7 @@ export class ChangeDataComponent implements OnInit{
       
       
 
-
+      
 
     })
     

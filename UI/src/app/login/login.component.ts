@@ -13,7 +13,7 @@ import { FormBuilder } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   users:User_login={
-    username: '',
+    email: '',
     password: ''
   };
 
@@ -21,14 +21,14 @@ export class LoginComponent implements OnInit {
 
 
   form=this.formbuilder.group(
-    {username:'',password:''}
+    {email:'',password:''}
   );
 
 
    sendLoginData(): void{
-    console.log(this.users.username);
-    this.users.username=this.form.value.username as string;
-    if(this.users.username.trim()==""){
+    console.log(this.users.email);
+    this.users.email=this.form.value.email as string;
+    if(this.users.email.trim()==""){
       window.alert("All fields are required!")
       return;
     }
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     this.nav.tryLogin(this.users).subscribe(s=>{
       
       if ((s as string) == "FALSE"){
-        window.alert("Invalid username or password!");
+        window.alert("Invalid email or password!");
         this.nav.showLogin();
         
         

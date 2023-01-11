@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ARRAY
+from sqlalchemy import ARRAY,JSON
 from sqlalchemy.ext.mutable import MutableList
 from sqlalchemy import PickleType
 # from sqlalchemy_utils import ScalarListType
@@ -8,8 +8,8 @@ from sqlalchemy import PickleType
 app = Flask(__name__)
 
 #'sqlite:///C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db'         --MILOS
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db'
+#C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -25,11 +25,11 @@ class User(db.Model):
     phoneNumber = db.Column(db.String(50))
     email = db.Column(db.String(100), unique=True)
     loggedIn=db.Column(db.String(1))
-    likedTopic=db.Column(MutableList.as_mutable(PickleType(db.Integer, db.ForeignKey("topic.id"))))
-    unlikedTopic=db.Column(MutableList.as_mutable(PickleType(db.Integer, db.ForeignKey("topic.id"))))
-    likedComment=db.Column(MutableList.as_mutable(PickleType(db.Integer, db.ForeignKey("comment.id"))))
-    unlikedComment=db.Column(MutableList.as_mutable(PickleType(db.Integer, db.ForeignKey("comment.id"))))
-    interests=db.Column(MutableList.as_mutable(PickleType(db.Integer, db.ForeignKey("topic.id"))))
+    likedTopic=db.Column(JSON)
+    unlikedTopic=db.Column(JSON)
+    likedComment=db.Column(JSON)
+    unlikedComment=db.Column(JSON)
+    interests=db.Column(JSON)
     topics = db.relationship('Topic', backref='user')
     commentss = db.relationship('Comment', backref='user')
 

@@ -61,8 +61,18 @@ export class NavigationServiceService  {
     return this.http.post<any>('http://127.0.0.1:5000/like',id)
   }
 
+  tryunLike(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/unlike',id)
+  }
+
+
+
   tryDislike(id:number){
     return this.http.post<any>('http://127.0.0.1:5000/dislike',id)
+  }
+
+  tryunDislike(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/undislike',id)
   }
 
 

@@ -1,3 +1,5 @@
+import json
+
 class User():
     firstName = None
     lastName = None
@@ -32,6 +34,11 @@ def ListToDict(list):
         "phoneNumber":list[7],
         "email":list[8],
         "loggedIn":list[9],
+        "likedTopic":json.loads(list[10]),
+        "unlikedTopic":json.loads(list[11]),
+        "likedComment":json.loads(list[12]),
+        "unlikedComment":json.loads(list[13]),
+        "interests":json.loads(list[14])
     }
     return dict
 
