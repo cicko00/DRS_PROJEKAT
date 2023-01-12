@@ -23,7 +23,6 @@ export class HomeComponent {
       }
 
       this.home()
-      this.setFalse()
 
      });
   }
@@ -128,6 +127,7 @@ setFalse(){
 
     var object=this.msg;
     var likedList=object.likedTopic;
+    var dislikedList=object.unlikedTopic;
     console.log(object)
 
     this.posts.forEach(function(post){
@@ -135,13 +135,19 @@ setFalse(){
       
 
       console.log(post)
-      post.disliked=false;
 
       if(likedList.includes(post.id)){
         post.liked=true;
       }
       else{
         post.liked=false;
+      }
+
+      if(dislikedList.includes(post.id)){
+        post.disliked=true;
+      }
+      else{
+        post.disliked=false;
       }
       
     })

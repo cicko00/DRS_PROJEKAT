@@ -31,7 +31,7 @@ CORS(app)
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
 ##
 
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db")
+database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db" )
 users = [ { 'username': 'milos', 'password':'milos'}]
 app.secret_key="hhhhhh"
 cursor=database.cursor()
@@ -84,8 +84,7 @@ def like():
    cursor.execute("""UPDATE user SET likedTopic=? WHERE id=?""",(json.dumps(liked_topic),user["id"],))
    database.commit()
 
-
-
+   user=security.token_required(database,app.config["SECRET_KEY"])
    return jsonify(user) 
 
 
@@ -123,8 +122,18 @@ def dislike():
    cursor.execute("""UPDATE topic SET dislikes=dislikes+1 where id=?""",(int(id),))
    database.commit()
 
+   disliked_topic=[]
+   cursor.execute("""SELECT unlikedTopic from user where id=?""",(user["id"],))
+   database.commit()
+   disliked_topic_JSON=cursor.fetchone()
 
+   disliked_topic=json.loads(disliked_topic_JSON[0])
+   disliked_topic.append(id)
 
+   cursor.execute("""UPDATE user SET unlikedTopic=? WHERE id=?""",(json.dumps(disliked_topic),user["id"],))
+   database.commit()
+
+   user=security.token_required(database,app.config["SECRET_KEY"])
    return jsonify(user)
 
 
@@ -136,8 +145,18 @@ def undislike():
    cursor.execute("""UPDATE topic SET dislikes=dislikes-1 where id=?""",(int(id),))
    database.commit()
 
+   disliked_topic=[]
+   cursor.execute("""SELECT unlikedTopic from user where id=?""",(user["id"],))
+   database.commit()
+   disliked_topic_JSON=cursor.fetchone()
 
+   disliked_topic=json.loads(disliked_topic_JSON[0])
+   disliked_topic.remove(id)
 
+   cursor.execute("""UPDATE user SET unlikedTopic=? WHERE id=?""",(json.dumps(disliked_topic),user["id"],))
+   database.commit()
+
+   user=security.token_required(database,app.config["SECRET_KEY"])
    return jsonify(user) 
 
 
