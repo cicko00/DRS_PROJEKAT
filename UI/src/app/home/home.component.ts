@@ -54,7 +54,7 @@ export class HomeComponent {
     var canexecute=this.navService.tryLike(id)
     var undislike=this.navService.tryunDislike(id)
     var unlike=this.navService.tryunLike(id)
-    this.posts.forEach(function(post){
+    this.posts.forEach(async function(post){
       
       if(post.id==id){
         
@@ -63,6 +63,7 @@ export class HomeComponent {
           post.likes=post.likes+1;
           if(post.disliked==true){
             undislike.subscribe()
+            await new Promise(f=>setTimeout(f,80))
             post.disliked=false;
             post.dislikes=post.dislikes-1;
           }
@@ -75,6 +76,7 @@ export class HomeComponent {
           post.liked=false;
           post.likes=post.likes-1
           unlike.subscribe()
+          return;
         }
       }
     })
@@ -93,7 +95,7 @@ export class HomeComponent {
     var unlike=this.navService.tryunLike(id);
     var undislike=this.navService.tryunDislike(id);
 
-    this.posts.forEach(function(post){
+    this.posts.forEach(async function(post){
       
       if(post.id==id){
         
@@ -103,6 +105,7 @@ export class HomeComponent {
           post.dislikes=post.dislikes+1;
           if(post.liked==true){
             unlike.subscribe()
+            await new Promise(f=>setTimeout(f,80))
             post.liked=false;
             post.likes=post.likes-1;
           }
