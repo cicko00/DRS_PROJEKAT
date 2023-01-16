@@ -14,7 +14,6 @@ import jwt
 import security
 
 
-
 app = Flask(__name__)
 
 app.config['DEBUG'] = True
@@ -30,8 +29,7 @@ CORS(app)
 ##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"       --Emilija
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
 ##
-
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db" )
+database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db")
 users = [ { 'username': 'milos', 'password':'milos'}]
 app.secret_key="hhhhhh"
 cursor=database.cursor()
@@ -77,14 +75,12 @@ def like():
    database.commit()
    liked_topic_JSON=cursor.fetchone()
    
-   
    liked_topic=json.loads(liked_topic_JSON[0])
    liked_topic.append(id)
 
    cursor.execute("""UPDATE user SET likedTopic=? WHERE id=?""",(json.dumps(liked_topic),user["id"],))
    database.commit()
 
-   user=security.token_required(database,app.config["SECRET_KEY"])
    return jsonify(user) 
 
 
@@ -95,20 +91,20 @@ def unlike():
    id=request.get_json()
    cursor.execute("""UPDATE topic SET likes=likes-1 where id=?""",(int(id),))
    database.commit()
+  
 
    liked_topic=[]
    cursor.execute("""SELECT likedTopic from user where id=?""",(user["id"],))
    database.commit()
    liked_topic_JSON=cursor.fetchone()
-   
-   
+
    liked_topic=json.loads(liked_topic_JSON[0])
    liked_topic.remove(id)
 
    cursor.execute("""UPDATE user SET likedTopic=? WHERE id=?""",(json.dumps(liked_topic),user["id"],))
    database.commit()
+  
 
-   user=security.token_required(database,app.config["SECRET_KEY"])
    return jsonify(user) 
 
 
@@ -122,10 +118,12 @@ def dislike():
    cursor.execute("""UPDATE topic SET dislikes=dislikes+1 where id=?""",(int(id),))
    database.commit()
 
+
    disliked_topic=[]
    cursor.execute("""SELECT unlikedTopic from user where id=?""",(user["id"],))
    database.commit()
    disliked_topic_JSON=cursor.fetchone()
+
 
    disliked_topic=json.loads(disliked_topic_JSON[0])
    disliked_topic.append(id)
@@ -133,30 +131,30 @@ def dislike():
    cursor.execute("""UPDATE user SET unlikedTopic=? WHERE id=?""",(json.dumps(disliked_topic),user["id"],))
    database.commit()
 
-   user=security.token_required(database,app.config["SECRET_KEY"])
    return jsonify(user)
 
 
 @app.route('/undislike', methods=['get','post'])
 def undislike():
    user=security.token_required(database,app.config["SECRET_KEY"])
-   
+
    id=request.get_json()
    cursor.execute("""UPDATE topic SET dislikes=dislikes-1 where id=?""",(int(id),))
    database.commit()
+
 
    disliked_topic=[]
    cursor.execute("""SELECT unlikedTopic from user where id=?""",(user["id"],))
    database.commit()
    disliked_topic_JSON=cursor.fetchone()
 
+
    disliked_topic=json.loads(disliked_topic_JSON[0])
    disliked_topic.remove(id)
-
+   
    cursor.execute("""UPDATE user SET unlikedTopic=? WHERE id=?""",(json.dumps(disliked_topic),user["id"],))
    database.commit()
 
-   user=security.token_required(database,app.config["SECRET_KEY"])
    return jsonify(user) 
 
 
@@ -164,14 +162,11 @@ def undislike():
 def changeData():
   user=security.token_required(database,app.config["SECRET_KEY"])
   user_update=request.get_json()
+
   cursor.execute("""UPDATE user SET firstName=?,lastName=?,username=?,password=?,country=?,address=?,email=?,phoneNumber=?WHERE id=?""",(user_update['firstName'],user_update['lastName'],user_update['username'],user_update['password'],user_update['country'],user_update['address'],user_update['email'],user_update['phoneNumber'],user['id'],))
-
   database.commit()
-  
+
   return jsonify("TRUE")
-
-
-   
 
 
 @app.route('/login', methods=['GET', 'POST'])

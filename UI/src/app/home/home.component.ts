@@ -50,112 +50,58 @@ export class HomeComponent {
     }
   }
 
-  likePost(id:number){
-    var canexecute=this.navService.tryLike(id)
-    var undislike=this.navService.tryunDislike(id)
-    var unlike=this.navService.tryunLike(id)
-    this.posts.forEach(async function(post){
-      
-      if(post.id==id){
-        
-        if(post.liked==false){
+  async likePost(id:number){
+    const post = this.posts.find(x => x.id === id);
+      if(post){
           post.liked=true;
-          post.likes=post.likes+1;
+          post.likes++;
           if(post.disliked==true){
-            undislike.subscribe()
+            this.undislikePost(id);
             await new Promise(f=>setTimeout(f,80))
-            post.disliked=false;
-            post.dislikes=post.dislikes-1;
           }
-          canexecute.subscribe();
-         
-          
+          this.navService.tryLike(id).subscribe();
           return;
-        }
-        else{
-          post.liked=false;
-          post.likes=post.likes-1
-          unlike.subscribe()
-          return;
-        }
+      } 
+  }
+  unlikePost(id:number){
+    const post = this.posts.find(x => x.id === id);
+      if(post){
+        post.liked=false;
+        post.likes--
+        this.navService.tryunLike(id).subscribe()
+        return;
       }
-    })
-
-    
-    
-
-    
-    
-    
   }
 
-  dislikePost(id:number){
-    var canexecute=this.navService.tryDislike(id);
-
-    var unlike=this.navService.tryunLike(id);
-    var undislike=this.navService.tryunDislike(id);
-
-    this.posts.forEach(async function(post){
-      
-      if(post.id==id){
-        
-        if(post.disliked==false){
-         
+  async dislikePost(id:number){
+    const post = this.posts.find(x => x.id === id);
+      if(post){
           post.disliked=true;
-          post.dislikes=post.dislikes+1;
+          post.dislikes++;
           if(post.liked==true){
-            unlike.subscribe()
+            this.unlikePost(id);
             await new Promise(f=>setTimeout(f,80))
-            post.liked=false;
-            post.likes=post.likes-1;
           }
-          canexecute.subscribe();
+          this.navService.tryDislike(id).subscribe();
           return;
-        }
-        else{
-          post.disliked=false;
-          post.dislikes=post.dislikes-1
-          undislike.subscribe()
-        }
+        
       }
-    })
-
-   
-
-    
-    
+  }
+  undislikePost(id:number){
+    const post = this.posts.find(x => x.id === id);
+      if(post){
+        post.disliked=false;
+        post.dislikes--
+        this.navService.tryunDislike(id).subscribe()
+      }
   }
 
 setFalse(){
+  const { likedTopic, unlikedTopic } = this.msg;
 
-    var object=this.msg;
-    var likedList=object.likedTopic;
-    var dislikedList=object.unlikedTopic;
-    console.log(object)
-
-    this.posts.forEach(function(post){
-
-      
-
-      console.log(post)
-
-      if(likedList.includes(post.id)){
-        post.liked=true;
-      }
-      else{
-        post.liked=false;
-      }
-
-      if(dislikedList.includes(post.id)){
-        post.disliked=true;
-      }
-      else{
-        post.disliked=false;
-      }
-      
-    })
+  this.posts.forEach(post => {
+    post.liked = likedTopic.includes(post.id);
+    post.disliked = unlikedTopic.includes(post.id);
+  });
   }
-  
-
-
 }

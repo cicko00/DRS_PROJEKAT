@@ -22,6 +22,7 @@ import { interceptorHTTP } from './services/interceptorHTTP.service';
 import { LogoutComponent } from './logout/logout.component';
 import { MyPostsComponent } from './my-posts/my-posts.component';
 import { AddPostComponent } from './add-post/add-post.component';
+import { CommentComponent } from './comment/comment.component';
 
 
 
@@ -36,7 +37,8 @@ import { AddPostComponent } from './add-post/add-post.component';
     ProfileComponent,
     LogoutComponent,
     MyPostsComponent,
-    AddPostComponent
+    AddPostComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
