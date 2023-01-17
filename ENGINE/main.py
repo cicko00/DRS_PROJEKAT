@@ -29,7 +29,7 @@ CORS(app)
 ##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"       --Emilija
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
 ##
-database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db")
+database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db")
 users = [ { 'username': 'milos', 'password':'milos'}]
 app.secret_key="hhhhhh"
 cursor=database.cursor()
