@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SelectControlValueAccessor } from '@angular/forms';
-import { TitleStrategy } from '@angular/router';
+import { Router, TitleStrategy } from '@angular/router';
 import { Post } from '../models/post.model';
 import { User } from '../models/user.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
@@ -11,7 +11,8 @@ import { NavigationServiceService } from '../services/navigation-service.service
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  constructor(private navService: NavigationServiceService) {}
+  constructor(private navService: NavigationServiceService,
+              private router: Router) {}
   posts:Post[]=[]
   
   ngOnInit(): void {
@@ -51,6 +52,10 @@ export class HomeComponent {
   }
 
   async likePost(id:number){
+    if(this.msg == "FALSE")
+    {
+      this.router.navigate(["/login"])
+    }
     const post = this.posts.find(x => x.id === id);
       if(post){
           post.liked=true;
@@ -74,6 +79,10 @@ export class HomeComponent {
   }
 
   async dislikePost(id:number){
+    if(this.msg == "FALSE")
+    {
+      this.router.navigate(["/login"])
+    }
     const post = this.posts.find(x => x.id === id);
       if(post){
           post.disliked=true;

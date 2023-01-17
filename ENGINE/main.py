@@ -6,7 +6,6 @@ from create_database import create_connection
 from flask_cors import CORS
 from Models.User import User,ListToDict
 from Models.Post import Post,ListToDictPost
-from flask_session import Session
 import json
 import sqlite3
 import sqlalchemy
@@ -29,7 +28,7 @@ CORS(app)
 ##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"       --Emilija
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
 ##
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db")
+database = create_connection("D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db" )
 users = [ { 'username': 'milos', 'password':'milos'}]
 app.secret_key="hhhhhh"
 cursor=database.cursor()

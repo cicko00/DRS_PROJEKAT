@@ -6,7 +6,7 @@ export interface Post {
     dislikes:number;
     user:string;
     liked:boolean;
-    disliked:boolean
-
+    disliked:boolean;
+    user_id:number;
     
 }

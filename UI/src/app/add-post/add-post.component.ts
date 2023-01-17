@@ -20,8 +20,8 @@ export class AddPostComponent implements OnInit {
     likes:0,
     dislikes:0,
     liked:false,
-    disliked:false
-    
+    disliked:false,
+    user_id:0
   };
   
 
