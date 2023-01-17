@@ -23,6 +23,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { MyPostsComponent } from './my-posts/my-posts.component';
 import { AddPostComponent } from './add-post/add-post.component';
 import { CommentComponent } from './comment/comment.component';
+import { InterestsComponent } from './interests/interests.component';
 
 
 
@@ -38,7 +39,8 @@ import { CommentComponent } from './comment/comment.component';
     LogoutComponent,
     MyPostsComponent,
     AddPostComponent,
-    CommentComponent
+    CommentComponent,
+    InterestsComponent
   ],
   imports: [
     BrowserModule,

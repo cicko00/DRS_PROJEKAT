@@ -21,6 +21,7 @@ export class ChangeDataComponent implements OnInit{
     phoneNumber: '',
     likedTopic:[],
     unlikedTopic:[],
+    interests:[]
   };
   
   
@@ -93,6 +94,9 @@ export class ChangeDataComponent implements OnInit{
     this.users.likedTopic=this.user.likedTopic;
 
     this.users.unlikedTopic=this.user.unlikedTopic;
+
+    this.users.interests=this.user.interests;
+    
 
     
 

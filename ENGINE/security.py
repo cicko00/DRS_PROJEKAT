@@ -15,7 +15,10 @@ def token_required(database,secretkey):
             print("TOKEEN:"+token)
             sys.stdout.flush()
         if token==None:
+            print("Nije nasao token")
+            sys.stdout.flush()
             return "FALSE"
+        
                 
             
         

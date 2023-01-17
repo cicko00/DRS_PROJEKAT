@@ -27,8 +27,9 @@ CORS(app)
 ##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"                                           --Cvijetin
 ##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"       --Emilija
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
-##
-database = create_connection("D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db" )
+##"C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"      --Igor
+
+database = create_connection("C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db" )
 users = [ { 'username': 'milos', 'password':'milos'}]
 app.secret_key="hhhhhh"
 cursor=database.cursor()
@@ -64,7 +65,7 @@ def profile():
 @app.route('/like', methods=['get','post'])
 def like():
    user=security.token_required(database,app.config["SECRET_KEY"])
-   
+   print("TEST1")
    id=request.get_json()
    cursor.execute("""UPDATE topic SET likes=likes+1 where id=?""",(int(id),))
    database.commit()
@@ -245,9 +246,56 @@ def addpost():
 
 
 
+
+
   return jsonify('TRUE')
 
 
+
+@app.route('/notify', methods=['get','post'])
+def notify():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+   
+   id=request.get_json()
+  
+  
+
+   notified_topic=[]
+   cursor.execute("""SELECT interests from user where id=?""",(user["id"],))
+   database.commit()
+   notified_topic_JSON=cursor.fetchone()
+
+   notified_topic=json.loads(notified_topic_JSON[0])
+   notified_topic.append(id)
+
+   cursor.execute("""UPDATE user SET interests=? WHERE id=?""",(json.dumps(notified_topic),user["id"],))
+   database.commit()
+  
+
+   return jsonify(user) 
+
+
+@app.route('/unnotify', methods=['get','post'])
+def unnotify():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+   
+   id=request.get_json()
+  
+  
+
+   notified_topic=[]
+   cursor.execute("""SELECT interests from user where id=?""",(user["id"],))
+   database.commit()
+   notified_topic_JSON=cursor.fetchone()
+
+   notified_topic=json.loads(notified_topic_JSON[0])
+   notified_topic.remove(id)
+
+   cursor.execute("""UPDATE user SET interests=? WHERE id=?""",(json.dumps(notified_topic),user["id"],))
+   database.commit()
+  
+
+   return jsonify(user) 
 
 
 

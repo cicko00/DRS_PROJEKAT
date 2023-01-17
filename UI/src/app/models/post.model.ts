@@ -8,5 +8,6 @@ export interface Post {
     liked:boolean;
     disliked:boolean;
     user_id:number;
+    notified:boolean
     
 }

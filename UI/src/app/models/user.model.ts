@@ -4,6 +4,7 @@ export interface User {
     lastName:string;
     address:string;
     country:string;
+    interests:[];
     
     username: string;
     password: string;
@@ -18,4 +19,6 @@ export interface User_login{
     email: string;
     password: string;
 }
+
+
 

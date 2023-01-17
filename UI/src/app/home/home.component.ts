@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SelectControlValueAccessor } from '@angular/forms';
 import { Router, TitleStrategy } from '@angular/router';
+import { of } from 'rxjs';
 import { Post } from '../models/post.model';
 import { User } from '../models/user.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
@@ -41,6 +42,7 @@ export class HomeComponent {
   msg:any;
   show:boolean=false;
   loggedIn:boolean=false;
+  
 
   ShowAddPost(){
     if(this.show==true){
@@ -106,11 +108,50 @@ export class HomeComponent {
   }
 
 setFalse(){
-  const { likedTopic, unlikedTopic } = this.msg;
+  const { likedTopic, unlikedTopic, interests } = this.msg;
 
   this.posts.forEach(post => {
     post.liked = likedTopic.includes(post.id);
     post.disliked = unlikedTopic.includes(post.id);
+    post.notified = interests.includes(post.id);
+    
   });
   }
+
+notifyPost(id:any){
+
+  if(this.msg == "FALSE")
+  {
+    this.router.navigate(["/login"])
+    return
+  }
+const User = this.msg;
+const post = this.posts.find(x => x.id === id)
+   if(post){
+
+   if(post.notified==false)
+        {post.notified=true;
+          this.navService.tryNotify(id).subscribe()
+          return}
+   
+        else{
+          post.notified=false;
+          this.navService.tryUnnotify(id).subscribe()
+           return
+       }
+  
+       } 
+      }
+   
+
+
+
+
+ 
 }
+
+
+
+
+
+

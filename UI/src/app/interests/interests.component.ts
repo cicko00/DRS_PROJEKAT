@@ -1,17 +1,16 @@
-import { TemplateBindingParseResult } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Post } from '../models/post.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
 
 @Component({
-  selector: 'app-my-posts',
-  templateUrl: './my-posts.component.html',
-  styleUrls: ['./my-posts.component.scss']
+  selector: 'app-interests',
+  templateUrl: './interests.component.html',
+  styleUrls: ['./interests.component.scss']
 })
 
 
-export class MyPostsComponent implements OnInit {
+export class InterestsComponent {
   msg:any;
   navService: any;
   constructor(private nav:NavigationServiceService,private router:Router){}
@@ -27,14 +26,7 @@ export class MyPostsComponent implements OnInit {
   }
   show:boolean=false;
 
-  ShowAddPost(){
-    if(this.show==true){
-      this.show=false;
-    }
-    else{
-      this.show=true;
-    }
-  }
+  
 
   temp:Post[] = []
   home(): void{
@@ -42,7 +34,7 @@ export class MyPostsComponent implements OnInit {
     .subscribe(x => {
       console.log(x);
       x.forEach(x => {
-        if(x.user_id == this.msg.id)
+        if(this.msg.interests.includes(x.id))
         {
             this.temp.push(x);
         }
@@ -116,5 +108,31 @@ setFalse(){
   });
   }
 
+  notifyPost(id:any){
+
+    if(this.msg == "FALSE")
+    {
+      this.router.navigate(["/login"])
+      return
+    }
+  const User = this.msg;
+  const post = this.posts.find(x => x.id === id)
+     if(post){
+  
+     if(post.notified==false)
+          {post.notified=true;
+            this.navService.tryNotify(id).subscribe()
+            return}
+     
+          else{
+            post.notified=false;
+            this.navService.tryUnnotify(id).subscribe()
+             return
+         }
+    
+         } 
+        }
+   
+        
 
 }

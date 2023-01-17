@@ -23,7 +23,8 @@ export class RegisterComponent implements OnInit {
     email: '',
     phoneNumber: '',
     likedTopic:[],
-    unlikedTopic:[]
+    unlikedTopic:[],
+    interests:[]
   };
   
   

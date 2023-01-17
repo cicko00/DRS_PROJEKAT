@@ -78,6 +78,12 @@ export class NavigationServiceService  {
     return this.http.post<any>('http://127.0.0.1:5000/undislike',id)
   }
 
+  tryNotify(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/notify',id)
+  }
 
+  tryUnnotify(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/unnotify',id)
+  }
  
 }
