@@ -20,7 +20,9 @@ export class InterestsComponent {
       this.msg=x;
       if(this.msg=='FALSE'){
         this.router.navigate(["/home"])
+
       }
+      this.nav.showNoLogin()
       this.home()
     })
   }
@@ -100,11 +102,12 @@ export class InterestsComponent {
   }
 
 setFalse(){
-  const { likedTopic, unlikedTopic } = this.msg;
+  const { likedTopic, unlikedTopic,interests } = this.msg;
 
   this.posts.forEach(post => {
     post.liked = likedTopic.includes(post.id);
     post.disliked = unlikedTopic.includes(post.id);
+    post.notified=interests.includes(post.id)
   });
   }
 
@@ -121,12 +124,12 @@ setFalse(){
   
      if(post.notified==false)
           {post.notified=true;
-            this.navService.tryNotify(id).subscribe()
+            this.nav.tryNotify(id).subscribe()
             return}
      
           else{
             post.notified=false;
-            this.navService.tryUnnotify(id).subscribe()
+            this.nav.tryUnnotify(id).subscribe()
              return
          }
     

@@ -22,6 +22,9 @@ export class MyPostsComponent implements OnInit {
       if(this.msg=='FALSE'){
         this.router.navigate(["/home"])
       }
+      else{
+        this.nav.showNoLogin()
+      }
       this.home()
     })
   }

@@ -118,8 +118,10 @@ export class ChangeDataComponent implements OnInit{
     this.navCondition.getUserProfile().subscribe(x=>{
       this.user=x
       if(this.user=='FALSE'){
+        
         this.router.navigate(['/home'])
       }
+      this.navCondition.showNoLogin()
       
       
 
