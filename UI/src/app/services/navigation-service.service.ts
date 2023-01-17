@@ -19,6 +19,9 @@ export class NavigationServiceService  {
     this.LoginStatus=true;
    }
    home(): Observable<Post[]>{
+
+
+    
     const posts = this.http.get<Post[]>('http://127.0.0.1:5000/home');
     return posts;
    }
