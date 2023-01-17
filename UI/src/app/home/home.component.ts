@@ -16,6 +16,8 @@ export class HomeComponent {
               private router: Router) {}
   posts:Post[]=[]
   
+
+
   ngOnInit(): void {
     this.navService.getUserProfile().subscribe(x=>{
       this.msg=x;
@@ -51,6 +53,17 @@ export class HomeComponent {
     else{
       this.show=true;
     }
+  }
+  ShowAddComment(id:number){
+    const post = this.posts.find(x => x.id === id);
+      if(post){
+        if(post.showComment==true){
+          post.showComment=false;
+        }
+        else{
+          post.showComment=true;
+        }
+     }
   }
 
   async likePost(id:number){

@@ -29,8 +29,7 @@ CORS(app)
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
 ##"C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"      --Igor
 
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db" )
-users = [ { 'username': 'milos', 'password':'milos'}]
+database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db")
 app.secret_key="hhhhhh"
 cursor=database.cursor()
 ##cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (4,'Emilija','Balaz','Kikinda','Srbija','emily','nestonamadjarskom','brojtelefona','emiliabalazs.ki@gmail.com')""")
@@ -297,6 +296,20 @@ def unnotify():
 
    return jsonify(user) 
 
+@app.route('/add-comment', methods=['get','post'])
+def addcomment():
+   print("usepsno")
+   user=security.token_required(database,app.config["SECRET_KEY"])
+   newComment=request.get_json()
+   print(newComment)
+   cursor.execute("SELECT COALESCE(MAX(id),0) FROM comment")
+   database.commit()
+   oldid=cursor.fetchone()   
+   newid = oldid[0] + 1
 
+   cursor.execute("""INSERT OR REPLACE INTO  comment (id,desc,likes,dislikes,user_id,topic_id) VALUES (?,?,?,?,?,?)""",(newid,newComment['description'],newComment['likes'],newComment['dislikes'],user['id'], newComment['topic_id']))
+   database.commit()
+
+   return jsonify("TRUE")
 
 app.run()

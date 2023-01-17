@@ -1,14 +1,12 @@
-export interface Post {
+export interface Comment {
     id:number;
-    title:string;
     description:string;
     likes:number;
     dislikes:number;
     user:string;
+    topic:string;
     liked:boolean;
     disliked:boolean;
     user_id:number;
-    notified:boolean;
-    showComment:boolean;
-    
+    topic_id:number;
 }

@@ -1,6 +1,7 @@
 import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, observable, Observable,of } from 'rxjs';
+import { Comment } from '../models/comment.model';
 import { Post } from '../models/post.model';
 import { User, User_login } from '../models/user.model';
 
@@ -55,6 +56,9 @@ export class NavigationServiceService  {
     return this.http.post<any>('http://127.0.0.1:5000/add-post',post);
    }
 
+   tryAddComment(comment:Comment){
+    return this.http.post<any>('http://127.0.0.1:5000/add-comment',comment);
+   }
    
    tryChangeData(user:User){
     return this.http.post<any>('http://127.0.0.1:5000/change-data',user);
