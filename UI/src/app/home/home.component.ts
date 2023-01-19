@@ -8,6 +8,7 @@ import { NavigationServiceService } from '../services/navigation-service.service
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BuiltinType } from '@angular/compiler';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -20,7 +21,7 @@ export class HomeComponent {
               private formBuilder:FormBuilder) {}
   posts:Post[]=[]
 
-  posts_temp:Post[]=[]
+  
 
   sortUp:boolean=false;
   sortDown:boolean=false;
@@ -189,6 +190,7 @@ sortUpvotes(){
     this.sortDown=false;
     this.sortComm=false;
     this.posts.sort((a,b)=>(a.likes>b.likes? -1: 1))
+   
   }
 }
 
@@ -203,12 +205,13 @@ sortDownvotes(){
     this.sortUp=false;
     this.sortComm=false;
     this.posts.sort((a,b)=>(a.dislikes>b.dislikes? -1: 1))
+    
   }
 
 }
 
 sortComments(){
- 
+  
   if(this.sortComm==true){
     this.sortComm=false;
     window.location.reload()
@@ -218,6 +221,7 @@ sortComments(){
     this.sortUp=false;
     this.sortComm=true;
     this.posts.sort((a,b)=>(a.commentsNumber>b.commentsNumber? -1: 1))
+    
   }
 
 
@@ -228,7 +232,16 @@ searchform = this.formBuilder.group({searchField:""})
 
 searchPosts()
 {
-  var sf = this.searchform
+  
+
+  this.posts.forEach(post=>{
+    if(!post.title.includes(this.searchform.value.searchField as string)){
+      
+      this.posts.splice(this.posts.indexOf(post),1)
+    }
+  })
+
+  
  
 }
 
