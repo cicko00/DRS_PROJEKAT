@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Injectable, ViewChild } from '@angular/core';
 import { SelectControlValueAccessor } from '@angular/forms';
 import { Router, TitleStrategy } from '@angular/router';
 import { of } from 'rxjs';
 import { Post } from '../models/post.model';
 import { User } from '../models/user.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { NavigationServiceService } from '../services/navigation-service.service
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+
   constructor(private navService: NavigationServiceService,
               private router: Router) {}
   posts:Post[]=[]
@@ -66,7 +68,7 @@ export class HomeComponent {
      }
   }
 
-  async likePost(id:number){
+  public async likePost(id:number){
     if(this.msg == "FALSE")
     {
       this.router.navigate(["/login"])
@@ -83,7 +85,7 @@ export class HomeComponent {
           return;
       } 
   }
-  unlikePost(id:number){
+  public unlikePost(id:number){
     const post = this.posts.find(x => x.id === id);
       if(post){
         post.liked=false;
@@ -93,7 +95,7 @@ export class HomeComponent {
       }
   }
 
-  async dislikePost(id:number){
+  public async dislikePost(id:number){
     if(this.msg == "FALSE")
     {
       this.router.navigate(["/login"])
@@ -111,7 +113,7 @@ export class HomeComponent {
         
       }
   }
-  undislikePost(id:number){
+  public undislikePost(id:number){
     const post = this.posts.find(x => x.id === id);
       if(post){
         post.disliked=false;
@@ -131,7 +133,7 @@ setFalse(){
   });
   }
 
-notifyPost(id:any){
+public notifyPost(id:any){
 
   if(this.msg == "FALSE")
   {

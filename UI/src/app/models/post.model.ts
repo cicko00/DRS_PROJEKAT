@@ -10,5 +10,6 @@ export interface Post {
     user_id:number;
     notified:boolean;
     showComment:boolean;
+    disableComment:boolean;
     
 }

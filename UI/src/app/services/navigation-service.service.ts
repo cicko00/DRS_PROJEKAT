@@ -20,9 +20,6 @@ export class NavigationServiceService  {
     this.LoginStatus=true;
    }
    home(): Observable<Post[]>{
-
-
-    
     const posts = this.http.get<Post[]>('http://127.0.0.1:5000/home');
     return posts;
    }
@@ -56,6 +53,10 @@ export class NavigationServiceService  {
     return this.http.post<any>('http://127.0.0.1:5000/add-post',post);
    }
 
+   allComment(): Observable<Comment[]>{
+    const comments = this.http.get<Comment[]>('http://127.0.0.1:5000/add-comment');
+    return comments;
+   }
    tryAddComment(comment:Comment){
     return this.http.post<any>('http://127.0.0.1:5000/add-comment',comment);
    }
@@ -90,4 +91,24 @@ export class NavigationServiceService  {
     return this.http.post<any>('http://127.0.0.1:5000/unnotify',id)
   }
  
+  /* COMMENT */
+
+  tryLikeComment(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/likeComment',id)
+  }
+
+  tryunLikeComment(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/unlikeComment',id)
+  }
+
+
+
+  tryDislikeComment(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/dislikeComment',id)
+  }
+
+  tryunDislikeComment(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/undislikeComment',id)
+  }
+
 }

@@ -12,14 +12,17 @@ class Comment():
         self.topic_id = topic_id
 
     
-def ListToDictComment(list,username,topic_name):
+def ListToDictComment(list,username):
+    print("**************************************************************************")
+    print(list)
     dict={
         "id":list[0],
         "desc":list[1],
-        "user_id":list[2],
-        "topic_id":list[3],
+        "likes":list[2],
+        "dislikes":list[3],
+        "user_id":list[4],
+        "topic_id":list[5],
         "user":username,
-        "topic":topic_name
         
     }
     return dict

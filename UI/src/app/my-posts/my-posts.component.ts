@@ -119,5 +119,26 @@ setFalse(){
   });
   }
 
-
+  ShowAddComment(id:number){
+    const post = this.posts.find(x => x.id === id);
+      if(post){
+        if(post.showComment==true){
+          post.showComment=false;
+        }
+        else{
+          post.showComment=true;
+        }
+     }
+  }
+  DisableComments(id:number){
+    const post = this.posts.find(x => x.id === id);
+      if(post){
+        if(post.disableComment==true){
+          post.disableComment=true;
+        }
+        else{
+          post.disableComment=true;
+        }
+     }
+  }
 }

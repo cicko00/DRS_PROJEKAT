@@ -2,6 +2,7 @@ import os
 import sys
 import time
 from flask import jsonify,request, Flask,session,current_app
+from Models.Comment import ListToDictComment
 from create_database import create_connection
 from flask_cors import CORS
 from Models.User import User,ListToDict
@@ -29,7 +30,7 @@ CORS(app)
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
 ##"C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"      --Igor
 
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db")
+database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db" )
 app.secret_key="hhhhhh"
 cursor=database.cursor()
 ##cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (4,'Emilija','Balaz','Kikinda','Srbija','emily','nestonamadjarskom','brojtelefona','emiliabalazs.ki@gmail.com')""")
@@ -51,7 +52,7 @@ def home():
 
 
     
-
+    print(allPosts)
     return jsonify(allPosts)
 
 @app.route('/profile', methods=['get','post'])
@@ -298,18 +299,139 @@ def unnotify():
 
 @app.route('/add-comment', methods=['get','post'])
 def addcomment():
-   print("usepsno")
+   if request.method=="GET":
+      print("getttt")
+      cursor.execute("select * from comment")
+      database.commit()
+      commentsRAW=cursor.fetchall()
+      allComments=[]
+ 
+      for comment in commentsRAW:
+         cursor.execute("select username from user WHERE id=?",(comment[4],))
+         database.commit()
+         id=cursor.fetchone()
+         print(id)
+         allComments.append(ListToDictComment(comment,id[0]))
+         print(allComments)
+
+      return jsonify(allComments)
+
+   if request.method=="POST":
+      print("usepsno")
+      user=security.token_required(database,app.config["SECRET_KEY"])
+      newComment=request.get_json()
+      print(newComment)
+      cursor.execute("SELECT COALESCE(MAX(id),0) FROM comment")
+      database.commit()
+      oldid=cursor.fetchone()   
+      newid = oldid[0] + 1
+
+      cursor.execute("""INSERT OR REPLACE INTO  comment (id,desc,likes,dislikes,user_id,topic_id) VALUES (?,?,?,?,?,?)""",(newid,newComment['description'],newComment['likes'],newComment['dislikes'],user['id'], newComment['topic_id']))
+      database.commit()
+
+      return jsonify("TRUE")
+
+
+
+
+# COMMENT
+
+
+
+@app.route('/likeComment', methods=['get','post'])
+def likeComment():
    user=security.token_required(database,app.config["SECRET_KEY"])
-   newComment=request.get_json()
-   print(newComment)
-   cursor.execute("SELECT COALESCE(MAX(id),0) FROM comment")
-   database.commit()
-   oldid=cursor.fetchone()   
-   newid = oldid[0] + 1
-
-   cursor.execute("""INSERT OR REPLACE INTO  comment (id,desc,likes,dislikes,user_id,topic_id) VALUES (?,?,?,?,?,?)""",(newid,newComment['description'],newComment['likes'],newComment['dislikes'],user['id'], newComment['topic_id']))
+   print("TEST1")
+   id=request.get_json()
+   cursor.execute("""UPDATE comment SET likes=likes+1 where id=?""",(int(id),))
    database.commit()
 
-   return jsonify("TRUE")
+   liked_comment=[]
+   cursor.execute("""SELECT likedComment from user where id=?""",(user["id"],))
+   database.commit()
+   liked_comment_JSON=cursor.fetchone()
+   
+   liked_comment=json.loads(liked_comment_JSON[0])
+   liked_comment.append(id)
+
+   cursor.execute("""UPDATE user SET likedComment=? WHERE id=?""",(json.dumps(liked_comment),user["id"],))
+   database.commit()
+
+   return jsonify(user) 
+
+
+@app.route('/unlikeComment', methods=['get','post'])
+def unlikeComment():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+   
+   id=request.get_json()
+   cursor.execute("""UPDATE comment SET likes=likes-1 where id=?""",(int(id),))
+   database.commit()
+  
+
+   liked_comment=[]
+   cursor.execute("""SELECT likedComment from user where id=?""",(user["id"],))
+   database.commit()
+   liked_comment_JSON=cursor.fetchone()
+
+   liked_comment=json.loads(liked_comment_JSON[0])
+   liked_comment.remove(id)
+
+   cursor.execute("""UPDATE user SET likedComment=? WHERE id=?""",(json.dumps(liked_comment),user["id"],))
+   database.commit()
+  
+
+   return jsonify(user) 
+
+
+
+
+@app.route('/dislikeComment', methods=['get','post'])
+def dislikeComment():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+   
+   id=request.get_json()
+   cursor.execute("""UPDATE comment SET dislikes=dislikes+1 where id=?""",(int(id),))
+   database.commit()
+
+
+   disliked_comment=[]
+   cursor.execute("""SELECT unlikedComment from user where id=?""",(user["id"],))
+   database.commit()
+   disliked_comment_JSON=cursor.fetchone()
+
+
+   disliked_comment=json.loads(disliked_comment_JSON[0])
+   disliked_comment.append(id)
+
+   cursor.execute("""UPDATE user SET unlikedComment=? WHERE id=?""",(json.dumps(disliked_comment),user["id"],))
+   database.commit()
+
+   return jsonify(user)
+
+
+@app.route('/undislikeComment', methods=['get','post'])
+def undislikeComment():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+
+   id=request.get_json()
+   cursor.execute("""UPDATE comment SET dislikes=dislikes-1 where id=?""",(int(id),))
+   database.commit()
+
+
+   disliked_comment=[]
+   cursor.execute("""SELECT unlikedComment from user where id=?""",(user["id"],))
+   database.commit()
+   disliked_comment_JSON=cursor.fetchone()
+
+
+   disliked_comment=json.loads(disliked_comment_JSON[0])
+   disliked_comment.remove(id)
+   
+   cursor.execute("""UPDATE user SET unlikedComment=? WHERE id=?""",(json.dumps(disliked_comment),user["id"],))
+   database.commit()
+
+   return jsonify(user) 
+
 
 app.run()

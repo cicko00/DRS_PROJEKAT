@@ -19,7 +19,7 @@ const routes: Routes = [
   {path:'profile', component: ProfileComponent},
   {path:'logout', component: LogoutComponent},
   {path:'my-posts', component: MyPostsComponent},
-  {path:'interests', component: InterestsComponent}
+  {path:'interests', component: InterestsComponent},
 ];
 
 @NgModule({

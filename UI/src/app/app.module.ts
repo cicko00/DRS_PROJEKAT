@@ -40,7 +40,7 @@ import { InterestsComponent } from './interests/interests.component';
     MyPostsComponent,
     AddPostComponent,
     CommentComponent,
-    InterestsComponent
+    InterestsComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +67,6 @@ import { InterestsComponent } from './interests/interests.component';
       multi:true,
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

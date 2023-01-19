@@ -24,6 +24,7 @@ export class AddPostComponent implements OnInit {
     user_id:0,
     notified:false,
     showComment:false,
+    disableComment:false
   };
   
 

@@ -1,6 +1,6 @@
 export interface Comment {
     id:number;
-    description:string;
+    desc:string;
     likes:number;
     dislikes:number;
     user:string;

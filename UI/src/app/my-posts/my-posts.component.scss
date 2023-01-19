@@ -1,7 +1,7 @@
 .buttonADD{
     color: gold;
     background-color: black;
-    margin-left: 720px;
+    margin-left: 890px;
 }
 .buttonADD:hover{
     color: black;
@@ -21,6 +21,7 @@
 }
 .posts{
     list-style: none;
+    margin-left: 160px;
 }
 
 .list{
@@ -37,6 +38,12 @@
 .butImg{
     width: 20px;
     height: 20px;
+}
+.butTxt{
+    width: 150px;
+    height: 30px;
+    background-color: black;
+    color: gold;
 }
 .butImg:hover{
     border-style: solid;
