@@ -7,10 +7,11 @@ class Post():
     user_id = None
     isClosed=None
     isDeleted=None
+    commentsNumber=None
     
 
      #konsutrktor sa poljima
-    def __init__(self,id, title, description, likes, dislikes, user_id,isClosed,isDeleted):
+    def __init__(self,id, title, description, likes, dislikes, user_id,isClosed,isDeleted,commentsNumber):
         self.id=id
         self.title = title
         self.description = description
@@ -32,6 +33,7 @@ def ListToDictPost(list,username):
         "user_id":list[5],
         "isDeleted":list[6],
         "isClosed":list[7],
+        "commentsNumber":list[8],
         
         "user":username,
         

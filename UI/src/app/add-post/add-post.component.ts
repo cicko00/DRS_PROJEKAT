@@ -27,7 +27,8 @@ export class AddPostComponent implements OnInit {
 
     disableComment:false,
     isClosed:0,
-    isDeleted:0
+    isDeleted:0,
+    commentsNumber:0
 
   };
   

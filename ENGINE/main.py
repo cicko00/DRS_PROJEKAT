@@ -251,7 +251,7 @@ def addpost():
   
 
 
-  cursor.execute("""INSERT OR REPLACE INTO  topic (id,title,description,likes,dislikes,user_id,isDeleted,isClosed) VALUES (?,?,?,?,?,?,?,?)""",(newid,newPost['title'],newPost['description'],newPost['likes'],newPost['dislikes'],user['id'],0,0))
+  cursor.execute("""INSERT OR REPLACE INTO  topic (id,title,description,likes,dislikes,user_id,isDeleted,isClosed,commentsNumber) VALUES (?,?,?,?,?,?,?,?,?)""",(newid,newPost['title'],newPost['description'],newPost['likes'],newPost['dislikes'],user['id'],0,0,0))
   database.commit()
 
 
@@ -340,6 +340,11 @@ def addcomment():
       cursor.execute("""INSERT OR REPLACE INTO  comment (id,desc,likes,dislikes,user_id,topic_id) VALUES (?,?,?,?,?,?)""",(newid,newComment['desc'],newComment['likes'],newComment['dislikes'],user['id'], newComment['topic_id']))
 
       database.commit()
+
+
+      cursor.execute("""UPDATE topic set commentsNumber=commentsNumber+1 where id=?""",(newComment['topic_id'],))
+
+
 
       return jsonify("TRUE")
 

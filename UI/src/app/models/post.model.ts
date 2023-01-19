@@ -14,6 +14,7 @@ export interface Post {
 
     isClosed:number;
     isDeleted:number;
+    commentsNumber:number;
 
 
     

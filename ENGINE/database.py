@@ -42,6 +42,7 @@ class Topic(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     isDeleted=db.Column(db.Integer)
     isClosed=db.Column(db.Integer)
+    commentsNumber=db.Column(db.Integer)
     likedPosts = db.relationship('User', backref='topic')
     comments = db.relationship('Comment', backref='topic')
 

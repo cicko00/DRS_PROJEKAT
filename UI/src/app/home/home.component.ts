@@ -17,6 +17,13 @@ export class HomeComponent {
   constructor(private navService: NavigationServiceService,
               private router: Router) {}
   posts:Post[]=[]
+
+  posts_temp:Post[]=[]
+
+  sortUp:boolean=false;
+  sortDown:boolean=false;
+  sortComm:boolean=false;
+
   
 
 
@@ -42,6 +49,9 @@ export class HomeComponent {
           this.posts.push(post)
         }
       })
+
+      
+      
 
       
       this.setFalse()
@@ -164,6 +174,53 @@ const post = this.posts.find(x => x.id === id)
   
        } 
       }
+
+
+
+sortUpvotes(){
+  if(this.sortUp==true){
+    this.sortUp=false;
+    window.location.reload()
+  }
+  else{
+    this.sortUp=true;
+    this.sortDown=false;
+    this.sortComm=false;
+    this.posts.sort((a,b)=>(a.likes>b.likes? -1: 1))
+  }
+}
+
+sortDownvotes(){
+
+  if(this.sortDown==true){
+    this.sortDown=false;
+    window.location.reload()
+  }
+  else{
+    this.sortDown=true;
+    this.sortUp=false;
+    this.sortComm=false;
+    this.posts.sort((a,b)=>(a.dislikes>b.dislikes? -1: 1))
+  }
+
+}
+
+sortComments(){
+ 
+  if(this.sortComm==true){
+    this.sortComm=false;
+    window.location.reload()
+  }
+  else{
+    this.sortDown=false;
+    this.sortUp=false;
+    this.sortComm=true;
+    this.posts.sort((a,b)=>(a.commentsNumber>b.commentsNumber? -1: 1))
+  }
+
+
+
+}
    
 
 

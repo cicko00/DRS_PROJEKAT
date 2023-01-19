@@ -28,6 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AddPostComponent,
     CommentComponent,
     InterestsComponent,
+    
   ],
   imports: [
     BrowserModule,
