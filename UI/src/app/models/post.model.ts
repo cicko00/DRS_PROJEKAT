@@ -11,5 +11,10 @@ export interface Post {
     notified:boolean;
     showComment:boolean;
     disableComment:boolean;
+
+    isClosed:number;
+    isDeleted:number;
+
+
     
 }

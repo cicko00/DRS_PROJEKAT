@@ -2,3 +2,6 @@
 @import "~node_modules\\ngx-toastr\\toastr.css";
 @import "~bootstrap/dist/css/bootstrap.css";
 html,body{background-color: lightblue;}
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

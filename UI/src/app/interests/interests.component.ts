@@ -36,7 +36,7 @@ export class InterestsComponent {
     .subscribe(x => {
       console.log(x);
       x.forEach(x => {
-        if(this.msg.interests.includes(x.id))
+        if(this.msg.interests.includes(x.id) && x.isDeleted==0)
         {
             this.temp.push(x);
         }

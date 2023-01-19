@@ -5,16 +5,20 @@ class Post():
     likes = None
     dislikes = None
     user_id = None
+    isClosed=None
+    isDeleted=None
     
 
      #konsutrktor sa poljima
-    def __init__(self,id, title, description, likes, dislikes, user_id,):
+    def __init__(self,id, title, description, likes, dislikes, user_id,isClosed,isDeleted):
         self.id=id
         self.title = title
         self.description = description
         self.likes = likes
         self.dislikes = dislikes
         self.user_id = user_id
+        self.isClosed=isClosed
+        self.isDeleted=isDeleted
        
 
 
@@ -26,6 +30,9 @@ def ListToDictPost(list,username):
         "likes":list[3],
         "dislikes":list[4],
         "user_id":list[5],
+        "isDeleted":list[6],
+        "isClosed":list[7],
+        
         "user":username,
         
     }

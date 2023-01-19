@@ -111,4 +111,14 @@ export class NavigationServiceService  {
     return this.http.post<any>('http://127.0.0.1:5000/undislikeComment',id)
   }
 
+
+  tryClosePost(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/openClosePost',id)
+  }
+
+  tryDeletePost(id:number){
+    return this.http.post<any>('http://127.0.0.1:5000/deletePost',id)
+  }
+
+
 }

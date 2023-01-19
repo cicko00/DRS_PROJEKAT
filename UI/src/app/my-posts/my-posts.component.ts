@@ -45,7 +45,7 @@ export class MyPostsComponent implements OnInit {
     .subscribe(x => {
       console.log(x);
       x.forEach(x => {
-        if(x.user_id == this.msg.id)
+        if(x.user_id == this.msg.id && x.isDeleted==0)
         {
             this.temp.push(x);
         }
@@ -133,12 +133,26 @@ setFalse(){
   DisableComments(id:number){
     const post = this.posts.find(x => x.id === id);
       if(post){
-        if(post.disableComment==true){
-          post.disableComment=true;
+
+        if(post.isClosed==0){
+          post.isClosed=1;
+          this.nav.tryClosePost(id).subscribe()
         }
         else{
-          post.disableComment=true;
+          post.isClosed=0;
+          this.nav.tryClosePost(id).subscribe()
         }
      }
   }
+
+  deletePost(id:number){
+    const post = this.posts.find(x => x.id === id);
+    if(post){
+      
+        post.isDeleted=1;
+        this.nav.tryDeletePost(id).subscribe()
+        window.alert("Post deleted successfully!")
+      }
+  }
+
 }

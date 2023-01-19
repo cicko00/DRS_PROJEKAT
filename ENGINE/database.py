@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 #'sqlite:///C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db'         --MILOS
 #C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -40,6 +40,8 @@ class Topic(db.Model):
     likes = db.Column(db.Integer)
     dislikes = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    isDeleted=db.Column(db.Integer)
+    isClosed=db.Column(db.Integer)
     likedPosts = db.relationship('User', backref='topic')
     comments = db.relationship('Comment', backref='topic')
 

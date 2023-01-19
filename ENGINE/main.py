@@ -30,7 +30,9 @@ CORS(app)
 ##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
 ##"C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"      --Igor
 
-database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db" )
+
+database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db" )
+
 app.secret_key="hhhhhh"
 cursor=database.cursor()
 ##cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (4,'Emilija','Balaz','Kikinda','Srbija','emily','nestonamadjarskom','brojtelefona','emiliabalazs.ki@gmail.com')""")
@@ -239,9 +241,17 @@ def addpost():
   database.commit()
   oldid=cursor.fetchone()   
   newid = oldid[0] + 1
+
+  
+
+
   
   newPost=request.get_json()
-  cursor.execute("""INSERT OR REPLACE INTO  topic (id,title,description,likes,dislikes,user_id) VALUES (?,?,?,?,?,?)""",(newid,newPost['title'],newPost['description'],newPost['likes'],newPost['dislikes'],user['id']))
+
+  
+
+
+  cursor.execute("""INSERT OR REPLACE INTO  topic (id,title,description,likes,dislikes,user_id,isDeleted,isClosed) VALUES (?,?,?,?,?,?,?,?)""",(newid,newPost['title'],newPost['description'],newPost['likes'],newPost['dislikes'],user['id'],0,0))
   database.commit()
 
 
@@ -326,7 +336,9 @@ def addcomment():
       oldid=cursor.fetchone()   
       newid = oldid[0] + 1
 
-      cursor.execute("""INSERT OR REPLACE INTO  comment (id,desc,likes,dislikes,user_id,topic_id) VALUES (?,?,?,?,?,?)""",(newid,newComment['description'],newComment['likes'],newComment['dislikes'],user['id'], newComment['topic_id']))
+
+      cursor.execute("""INSERT OR REPLACE INTO  comment (id,desc,likes,dislikes,user_id,topic_id) VALUES (?,?,?,?,?,?)""",(newid,newComment['desc'],newComment['likes'],newComment['dislikes'],user['id'], newComment['topic_id']))
+
       database.commit()
 
       return jsonify("TRUE")
@@ -432,6 +444,51 @@ def undislikeComment():
    database.commit()
 
    return jsonify(user) 
+
+ 
+
+
+
+@app.route('/deletePost', methods=['get','post'])
+def deletePost():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+
+   id=request.get_json()
+   cursor.execute("""UPDATE topic SET isDeleted=1 where id=?""",(int(id),))
+   database.commit()
+
+
+
+   return jsonify("TRUE")
+
+
+
+@app.route('/openClosePost', methods=['get','post'])
+def openClosePost():
+   user=security.token_required(database,app.config["SECRET_KEY"])
+
+   id=request.get_json()
+   
+   cursor.execute("""Select isClosed from topic where id=?""",(int(id),))
+   database.commit()
+   isClosed=cursor.fetchone()
+   isClosed=isClosed[0]
+   
+
+
+   if(isClosed==0):
+      isClosed=1
+   else:
+      isClosed=0
+      
+   
+
+   cursor.execute("""UPDATE topic SET isClosed=? where id=?""",(isClosed,int(id),))
+   database.commit()
+
+
+
+   return jsonify("TRUE")  
 
 
 app.run()

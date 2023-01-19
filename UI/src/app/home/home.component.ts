@@ -36,7 +36,14 @@ export class HomeComponent {
     this.navService.home()
     .subscribe(x => {
       console.log(x);
-      this.posts = x;
+
+      x.forEach(post=>{
+        if(post.isDeleted==0){
+          this.posts.push(post)
+        }
+      })
+
+      
       this.setFalse()
 
     })

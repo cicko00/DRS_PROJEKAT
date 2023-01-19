@@ -24,6 +24,7 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
 import { AddPostComponent } from './add-post/add-post.component';
 import { CommentComponent } from './comment/comment.component';
 import { InterestsComponent } from './interests/interests.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -57,6 +58,7 @@ import { InterestsComponent } from './interests/interests.component';
     
    
     FormsModule,
+                     NgbModule,
     
     
   ],
