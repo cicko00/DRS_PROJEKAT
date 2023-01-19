@@ -31,7 +31,7 @@ CORS(app)
 ##"C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"      --Igor
 
 
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db" )
+database = create_connection("D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db" )
 
 app.secret_key="hhhhhh"
 cursor=database.cursor()

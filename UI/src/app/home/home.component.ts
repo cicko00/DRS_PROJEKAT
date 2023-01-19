@@ -1,11 +1,12 @@
 import { Component, Injectable, ViewChild } from '@angular/core';
-import { SelectControlValueAccessor } from '@angular/forms';
+import { FormBuilder, SelectControlValueAccessor } from '@angular/forms';
 import { Router, TitleStrategy } from '@angular/router';
 import { of } from 'rxjs';
 import { Post } from '../models/post.model';
 import { User } from '../models/user.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BuiltinType } from '@angular/compiler';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class HomeComponent {
 
   constructor(private navService: NavigationServiceService,
-              private router: Router) {}
+              private router: Router,
+              private formBuilder:FormBuilder) {}
   posts:Post[]=[]
 
   posts_temp:Post[]=[]
@@ -222,8 +224,13 @@ sortComments(){
 
 }
    
+searchform = this.formBuilder.group({searchField:""})
 
-
+searchPosts()
+{
+  var sf = this.searchform
+ 
+}
 
 
  

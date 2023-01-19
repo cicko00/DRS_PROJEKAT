@@ -10,13 +10,20 @@
 -->
 <button *ngIf="loggedIn" class="buttonADD"  (click)="ShowAddPost()">Add new post</button>
 
-<table class="newPostTable">
+<table class="sortTable">
   <tr><th class="th-post-table"  colspan="3">SORT BY:</th></tr>
   <tr><td><input *ngIf="!sortUp" type="button" class="input1" value="UpVotes" (click)="sortUpvotes()"><input *ngIf="sortUp" type="button" class="input2" value="UpVotes" (click)="sortUpvotes()"></td>
   <td><input type="button" *ngIf="!sortDown" class="input1" value="DownVotes" (click)="sortDownvotes()"><input type="button" *ngIf="sortDown" class="input2" value="DownVotes" (click)="sortDownvotes()"></td>
   <td><input type="button" *ngIf="!sortComm" class="input1" value="Comments" (click)="sortComments()"><input type="button" *ngIf="sortComm" class="input2" value="Comments" (click)="sortComments()"></td>
   </tr>
 </table>
+
+<form [formGroup]="searchform" (ngSubmit)="searchPosts()">
+  <table class="searchTable">
+    <tr><th class="th-post-table"  colspan="3">SEARCH:</th></tr>
+    <tr><td><input type="text" FormControlName="searchField" class="inputSearch"></td><td><input type="image" src="../../assets/searchbutton.png" class="searchButton" ></td></tr>
+  </table>
+</form>
 
 
 <app-add-post *ngIf="show"></app-add-post>
