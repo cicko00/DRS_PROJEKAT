@@ -20,9 +20,9 @@ export class HomeComponent {
               private router: Router,
               private formBuilder:FormBuilder) {}
   posts:Post[]=[]
-
+  post_temp:Post[]=[]
+ 
   
-
   sortUp:boolean=false;
   sortDown:boolean=false;
   sortComm:boolean=false;
@@ -53,7 +53,7 @@ export class HomeComponent {
         }
       })
 
-      
+      this.post_temp=JSON.parse(JSON.stringify(this.posts));
       
 
       
@@ -190,6 +190,7 @@ sortUpvotes(){
     this.sortDown=false;
     this.sortComm=false;
     this.posts.sort((a,b)=>(a.likes>b.likes? -1: 1))
+    this.post_temp=JSON.parse(JSON.stringify(this.posts));
    
   }
 }
@@ -205,6 +206,7 @@ sortDownvotes(){
     this.sortUp=false;
     this.sortComm=false;
     this.posts.sort((a,b)=>(a.dislikes>b.dislikes? -1: 1))
+    this.post_temp=JSON.parse(JSON.stringify(this.posts));
     
   }
 
@@ -221,6 +223,7 @@ sortComments(){
     this.sortUp=false;
     this.sortComm=true;
     this.posts.sort((a,b)=>(a.commentsNumber>b.commentsNumber? -1: 1))
+    this.post_temp=JSON.parse(JSON.stringify(this.posts));
     
   }
 
@@ -233,7 +236,7 @@ searchform = this.formBuilder.group({searchField:""})
 searchPosts()
 {
   
-
+  this.posts=JSON.parse(JSON.stringify(this.post_temp))
   this.posts.forEach(post=>{
     if(!post.title.includes(this.searchform.value.searchField as string)){
       
