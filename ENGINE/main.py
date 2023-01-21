@@ -162,6 +162,11 @@ def changeData():
   user=security.token_required(database,app.config["SECRET_KEY"])
   user_update=request.get_json()
 
+  if(user['email'] == "" or user['password'] == '' or user['address'] == ''
+        or user['firstName'] == '' or user['lastName'] == '' or user['country'] == '' or user['username'] == ''or user['phoneNumber'] == '' ):
+         return jsonify("FALSE")
+
+
   cursor.execute("""UPDATE user SET firstName=?,lastName=?,username=?,password=?,country=?,address=?,email=?,phoneNumber=?WHERE id=?""",(user_update['firstName'],user_update['lastName'],user_update['username'],user_update['password'],user_update['country'],user_update['address'],user_update['email'],user_update['phoneNumber'],user['id'],))
   database.commit()
 
@@ -172,6 +177,8 @@ def changeData():
 def login():
   if request.method=="POST":
         user=request.get_json()
+        if(user['email'] == "" or user['password'] == ''):
+            return jsonify("FALSE")
         cursor.execute("""SELECT * from user""")
         database.commit()
         db_list=cursor.fetchall()
@@ -201,6 +208,10 @@ def register():
     if request.method=="POST":
        
        user=request.get_json()
+
+       if(user['email'] == "" or user['password'] == '' or user['address'] == ''
+        or user['firstName'] == '' or user['lastName'] == '' or user['country'] == '' or user['username'] == ''or user['phoneNumber'] == '' ):
+         return jsonify("FALSE")
 
        cursor.execute("""SELECT * from user""")
        database.commit()
@@ -380,11 +391,10 @@ def addcomment():
       
 
       #for element in emails:
-      p1 = Process(target=SendHTML, args=(emails, user["username"],newComment['desc'], tema))
+      p1 = Process(target=SendHTML, args=(emails, user["username"],newComment['desc'], tema, newid))
       p1.start()
       print("Hi from process ", current_process().name, "(main process 7)")
-
-         #p1.join()
+      p1.join()
          #p1.start()
       #SendHTML(emails, user["username"],newComment['desc'], tema)
 
@@ -418,6 +428,96 @@ def likeComment():
    database.commit()
 
    return jsonify(user) 
+
+
+@app.route('/likeCommentEmail/<int:idComment>/<string:email>', methods=['get','post'])
+def likeCommentEmail(idComment,email):
+
+   liked_comment=[]
+   cursor.execute("""SELECT likedComment from user where email=?""",(email,))
+   database.commit()
+
+   liked_comment_Email_JSON=cursor.fetchone()
+   liked_comment=json.loads(liked_comment_Email_JSON[0])
+
+   if idComment in liked_comment:
+      return jsonify("False: Comment is already liked")
+
+   liked_comment.append(idComment)
+
+   cursor.execute("""UPDATE user SET likedComment=? WHERE email=?""",(json.dumps(liked_comment),email,))
+   database.commit()
+
+   cursor.execute("""UPDATE comment SET likes=likes+1 where id=?""",(idComment,))
+   database.commit()
+
+   # UNLIKEDDDDDDDD
+
+   unliked_comment=[]
+   cursor.execute("""SELECT unlikedComment from user where email=?""",(email,))
+   database.commit()
+
+   unliked_comment_Email_JSON=cursor.fetchone()
+   unliked_comment=json.loads(unliked_comment_Email_JSON[0])
+
+   if idComment in unliked_comment:
+      unliked_comment.remove(idComment)
+
+      cursor.execute("""UPDATE user SET unlikedComment=? WHERE email=?""",(json.dumps(unliked_comment),email,))
+      database.commit()
+
+      cursor.execute("""UPDATE comment SET dislikes=dislikes-1 where id=?""",(idComment,))
+      database.commit()
+
+   return jsonify("Comment successfully liked") 
+
+
+
+
+@app.route('/dislikeCommentEmail/<int:idComment>/<string:email>', methods=['get','post'])
+def dislikeCommentEmail(idComment,email):
+
+   disliked_comment=[]
+   cursor.execute("""SELECT unlikedComment from user where email=?""",(email,))
+   database.commit()
+
+   disliked_comment_Email_JSON=cursor.fetchone()
+   disliked_comment=json.loads(disliked_comment_Email_JSON[0])
+
+   if idComment in disliked_comment:
+      return jsonify("False: Comment is already disliked")
+
+   disliked_comment.append(idComment)
+
+   cursor.execute("""UPDATE user SET unlikedComment=? WHERE email=?""",(json.dumps(disliked_comment),email,))
+   database.commit()
+
+   cursor.execute("""UPDATE comment SET dislikes=dislikes+1 where id=?""",(idComment,))
+   database.commit()
+
+   # UNLIKEDDDDDDDD
+
+   liked_comment=[]
+   cursor.execute("""SELECT likedComment from user where email=?""",(email,))
+   database.commit()
+
+   liked_comment_Email_JSON=cursor.fetchone()
+   liked_comment=json.loads(liked_comment_Email_JSON[0])
+
+   if idComment in liked_comment:
+      liked_comment.remove(idComment)
+
+      cursor.execute("""UPDATE user SET likedComment=? WHERE email=?""",(json.dumps(liked_comment),email,))
+      database.commit()
+
+      cursor.execute("""UPDATE comment SET likes=likes-1 where id=?""",(idComment,))
+      database.commit()
+
+   return jsonify("Comment successfully disliked") 
+
+
+
+
 
 
 @app.route('/unlikeComment', methods=['get','post'])
@@ -539,4 +639,6 @@ def openClosePost():
    return jsonify("TRUE")  
 
 
-app.run()
+
+if __name__ == '__main__':
+    app.run()
