@@ -24,9 +24,9 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
 import { AddPostComponent } from './add-post/add-post.component';
 import { CommentComponent } from './comment/comment.component';
 import { InterestsComponent } from './interests/interests.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 
 @NgModule({
@@ -51,16 +51,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot(),
     // AngularMultiSelectModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot(),
-    
-    
-   
-    FormsModule,
-                     NgbModule,
+    FormsModule
     
     
   ],

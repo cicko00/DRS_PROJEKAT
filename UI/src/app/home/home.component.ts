@@ -5,7 +5,6 @@ import { of } from 'rxjs';
 import { Post } from '../models/post.model';
 import { User } from '../models/user.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BuiltinType } from '@angular/compiler';
 
 
@@ -46,7 +45,7 @@ export class HomeComponent {
     this.navService.home()
     .subscribe(x => {
       console.log(x);
-
+      console.log("hahahahhahhahahaha")
       x.forEach(post=>{
         if(post.isDeleted==0){
           this.posts.push(post)
@@ -66,7 +65,6 @@ export class HomeComponent {
   msg:any;
   show:boolean=false;
   loggedIn:boolean=false;
-  
 
   ShowAddPost(){
     if(this.show==true){
@@ -92,6 +90,7 @@ export class HomeComponent {
     if(this.msg == "FALSE")
     {
       this.router.navigate(["/login"])
+      return;
     }
     const post = this.posts.find(x => x.id === id);
       if(post){
@@ -119,6 +118,7 @@ export class HomeComponent {
     if(this.msg == "FALSE")
     {
       this.router.navigate(["/login"])
+      return;
     }
     const post = this.posts.find(x => x.id === id);
       if(post){

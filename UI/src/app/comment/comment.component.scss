@@ -22,6 +22,13 @@
    justify-content: center;
     
 }
+
+.author{
+    text-align: left;
+    float: left;
+    width: auto;
+    
+}
 .input2{
     width: 600px;
     height: 100px;
@@ -67,3 +74,15 @@
     border-style: solid;
     border-color: black;
 }
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  

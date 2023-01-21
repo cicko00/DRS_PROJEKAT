@@ -12,7 +12,8 @@ import sqlite3
 import sqlalchemy
 import jwt
 import security
-
+from sendgridEmail import SendHTML
+from multiprocessing import Process, current_process
 
 app = Flask(__name__)
 
@@ -31,13 +32,12 @@ CORS(app)
 ##"C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"      --Igor
 
 
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db" )
+database = create_connection("C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"  )
 
 app.secret_key="hhhhhh"
 cursor=database.cursor()
 ##cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (4,'Emilija','Balaz','Kikinda','Srbija','emily','nestonamadjarskom','brojtelefona','emiliabalazs.ki@gmail.com')""")
 ##cursor.execute("""DROP TABLE user""")
-
 
 @app.route('/home', methods=['get'])
 def home():
@@ -52,9 +52,6 @@ def home():
       id=cursor.fetchone()
       allPosts.append(ListToDictPost(post,id[0]))
 
-
-    
-    print(allPosts)
     return jsonify(allPosts)
 
 @app.route('/profile', methods=['get','post'])
@@ -188,7 +185,7 @@ def login():
                     app.config["SECRET_KEY"],
                     algorithm="HS256"
                 )
-              return jsonify(userr);
+              return jsonify(userr)
 
                 
                 
@@ -241,17 +238,10 @@ def addpost():
   database.commit()
   oldid=cursor.fetchone()   
   newid = oldid[0] + 1
-
-  
-
-
   
   newPost=request.get_json()
 
-  
-
-
-  cursor.execute("""INSERT OR REPLACE INTO  topic (id,title,description,likes,dislikes,user_id,isDeleted,isClosed,commentsNumber) VALUES (?,?,?,?,?,?,?,?,?)""",(newid,newPost['title'],newPost['description'],newPost['likes'],newPost['dislikes'],user['id'],0,0,0))
+  cursor.execute("""INSERT OR REPLACE INTO  topic (id,title,description,likes,dislikes,user_id,isDeleted,isClosed,commentsNumber,subscribedUser) VALUES (?,?,?,?,?,?,?,?,?,?)""",(newid,newPost['title'],newPost['description'],newPost['likes'],newPost['dislikes'],user['id'],0,0,0,"[]"))
   database.commit()
 
 
@@ -281,6 +271,17 @@ def notify():
    cursor.execute("""UPDATE user SET interests=? WHERE id=?""",(json.dumps(notified_topic),user["id"],))
    database.commit()
   
+   cursor.execute("""SELECT subscribedUser from topic where id=?""",(id,))
+   database.commit()
+
+   subscribed_user_JSON=cursor.fetchone()
+
+   subscribed_user=json.loads(subscribed_user_JSON[0])
+   subscribed_user.append(user["id"])
+
+   cursor.execute("""UPDATE topic SET subscribedUser=? WHERE id=?""",(json.dumps(subscribed_user),id,))
+   database.commit()
+
 
    return jsonify(user) 
 
@@ -303,7 +304,17 @@ def unnotify():
 
    cursor.execute("""UPDATE user SET interests=? WHERE id=?""",(json.dumps(notified_topic),user["id"],))
    database.commit()
-  
+
+   cursor.execute("""SELECT subscribedUser from topic where id=?""",(id,))
+   database.commit()
+
+   subscribed_user_JSON=cursor.fetchone()
+
+   subscribed_user=json.loads(subscribed_user_JSON[0])
+   subscribed_user.remove(user["id"])
+
+   cursor.execute("""UPDATE topic SET subscribedUser=? WHERE id=?""",(json.dumps(subscribed_user),id,))
+   database.commit()
 
    return jsonify(user) 
 
@@ -320,9 +331,7 @@ def addcomment():
          cursor.execute("select username from user WHERE id=?",(comment[4],))
          database.commit()
          id=cursor.fetchone()
-         print(id)
          allComments.append(ListToDictComment(comment,id[0]))
-         print(allComments)
 
       return jsonify(allComments)
 
@@ -338,12 +347,46 @@ def addcomment():
 
 
       cursor.execute("""INSERT OR REPLACE INTO  comment (id,desc,likes,dislikes,user_id,topic_id) VALUES (?,?,?,?,?,?)""",(newid,newComment['desc'],newComment['likes'],newComment['dislikes'],user['id'], newComment['topic_id']))
-
       database.commit()
+
+      cursor.execute("""select title from topic where id=?""",(newComment['topic_id'],))
+      database.commit()
+
+      tema = cursor.fetchone()[0]
 
 
       cursor.execute("""UPDATE topic set commentsNumber=commentsNumber+1 where id=?""",(newComment['topic_id'],))
+      database.commit()
 
+      cursor.execute("""select subscribedUser from topic where id=?""",(newComment['topic_id'],))
+      database.commit()
+
+      subscribed_user_JSON=cursor.fetchone()
+
+      subscribed_user=json.loads(subscribed_user_JSON[0])
+      print(subscribed_user)
+      subscribed_user1 = ",".join( map(str, subscribed_user))
+      print(subscribed_user1)
+
+      cursor.execute("select email from user where id in (%s)" % (subscribed_user1))
+      database.commit()
+
+      temp = cursor.fetchall()
+      emails = []
+      for row in temp:
+         emails.append(row[0])
+
+      
+      
+
+      #for element in emails:
+      p1 = Process(target=SendHTML, args=(emails, user["username"],newComment['desc'], tema))
+      p1.start()
+      print("Hi from process ", current_process().name, "(main process 7)")
+
+         #p1.join()
+         #p1.start()
+      #SendHTML(emails, user["username"],newComment['desc'], tema)
 
 
       return jsonify("TRUE")

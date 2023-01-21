@@ -1,8 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Comment } from '../models/comment.model';
 import { NavigationServiceService } from '../services/navigation-service.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+
 
 @Component({
   selector: 'app-comment',
@@ -12,6 +15,8 @@ import { NavigationServiceService } from '../services/navigation-service.service
 export class CommentComponent {
   @Input() post:any;
   @Input() user:any;
+  @Input() loggedIn:any;
+
   username:any;
 
   comments:Comment[]=[]
@@ -29,10 +34,15 @@ export class CommentComponent {
     topic_id:0,
   };
 
+  displayedColumns = ['id', 'desc'];
+  dataSource = new MatTableDataSource<Comment>(this.comments);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+
   constructor(public navService: NavigationServiceService,private formbuilder:FormBuilder,private router: Router) {}
   ngOnInit():void  {
-
     this.allComment();
+    //console.log(this.comments)
   }
 
   form=this.formbuilder.group(
@@ -48,8 +58,11 @@ export class CommentComponent {
             this.temp.push(x);
         }
       });
-      console.log(x);
+      // console.log(x);
       this.comments = this.temp;
+      console.log(this.dataSource)
+      console.log(this.comments)
+      // console.log(this.temp)
       this.setFalseComment();
 
     })
@@ -65,6 +78,11 @@ export class CommentComponent {
     this.navService.tryAddComment(this.comment).subscribe(x=>{
       window.alert(x as string);
     });
+  }
+
+  
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
 
