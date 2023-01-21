@@ -1,0 +1,41 @@
+services:
+  main:
+    build: ./ENGINE
+    command: python -u main.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./ENGINE:/main
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      WAIT_HOSTS: test_mongodb:27017
+    networks:
+      - mongo
+  db:
+    image: mongo:latest
+    container_name: sqlite3_container
+    hostname: test_mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=cryptocurrency_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+
+  ui:
+    image: UI
+    container_name: ui
+    build: ./UI
+    ports:
+      - 4200:4200
+    volumes:
+      - ./UI/src:/main/src
+    environment:
+      - REACT_APP_NAME=ui
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - mongo
+    #env_file:
+    #  - ./.env
+    

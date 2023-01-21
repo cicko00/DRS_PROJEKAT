@@ -1,0 +1,17 @@
+os
+sys
+functools
+flask
+current_app
+flask_cors
+dotenv
+json
+sendgrid.helpers.mail
+jwt
+security
+sendgrid
+multiprocessing
+flask_sqlalchemy
+sqlalchemy.ext.mutable
+sqlalchemy
+sqlite3
