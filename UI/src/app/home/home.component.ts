@@ -238,7 +238,7 @@ searchPosts()
   
   this.posts=JSON.parse(JSON.stringify(this.post_temp))
   this.posts.forEach(post=>{
-    if(!post.title.includes(this.searchform.value.searchField as string)){
+    if(!post.title.toLowerCase().includes((this.searchform.value.searchField)?.toLowerCase() as string)){
       
       this.posts.splice(this.posts.indexOf(post),1)
     }

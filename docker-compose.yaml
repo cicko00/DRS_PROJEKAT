@@ -1,41 +1,25 @@
+version: '3'
 services:
-  main:
-    build: ./ENGINE
-    command: python -u main.py
+  flask:
+    image: python3-image
     ports:
       - "5000:5000"
+    environment:
+      FLASK_APP: main.py
+      FLASK_ENV: development
     volumes:
-      - ./ENGINE:/main
-    links:
-      - db
-    depends_on:
-      - db
-    environment:
-      WAIT_HOSTS: test_mongodb:27017
-    networks:
-      - mongo
-  db:
-    image: mongo:latest
-    container_name: sqlite3_container
-    hostname: test_mongodb
-    environment:
-      - MONGO_INITDB_DATABASE=cryptocurrency_db
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass
-
-  ui:
-    image: UI
-    container_name: ui
-    build: ./UI
+      - ./ENGINE:/app
+    command: flask run --host=0.0.0.0
+  angular:
+    image: angular-image
     ports:
-      - 4200:4200
+      - "4200:4200"
     volumes:
-      - ./UI/src:/main/src
-    environment:
-      - REACT_APP_NAME=ui
-      - CHOKIDAR_USEPOLLING=true
-    networks:
-      - mongo
-    #env_file:
-    #  - ./.env
-    
+      - ./UI/src:/app/src
+      - ./UI/node_modules:/app/node_modules
+    command: ng serve --host 0.0.0.0 --prod
+ # db:
+   # image: sqlite11-image
+   # volumes:
+    #  - ./DATABASE:/app
+    #command: sqlite3 /forum.db

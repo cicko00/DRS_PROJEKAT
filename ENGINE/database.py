@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 #'sqlite:///C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db'         --MILOS
 #C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\git\\DRS_PROJEKAT\\DATABASE\\forum.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///forum.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)

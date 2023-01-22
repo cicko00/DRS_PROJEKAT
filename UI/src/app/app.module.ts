@@ -15,7 +15,6 @@ import { RegisterComponent } from './register/register.component';
 import { ChangeDataComponent } from './change-data/change-data.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
-import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { interceptorHTTP } from './services/interceptorHTTP.service';
@@ -24,9 +23,6 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
 import { AddPostComponent } from './add-post/add-post.component';
 import { CommentComponent } from './comment/comment.component';
 import { InterestsComponent } from './interests/interests.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 
 @NgModule({
@@ -51,11 +47,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    MatPaginatorModule,
-    MatTableModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    // AngularMultiSelectModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot(),

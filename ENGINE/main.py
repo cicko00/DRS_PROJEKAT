@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 from flask import jsonify,request, Flask,session,current_app
 from Models.Comment import ListToDictComment
 from create_database import create_connection
@@ -32,12 +31,10 @@ CORS(app)
 ##"C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"      --Igor
 
 
-database = create_connection("C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"  )
+database = create_connection("./instance/forum.db")
 
 app.secret_key="hhhhhh"
 cursor=database.cursor()
-##cursor.execute("""INSERT OR REPLACE INTO  user (id,firstName,lastName,address,country,username,password,phoneNumber,email) VALUES (4,'Emilija','Balaz','Kikinda','Srbija','emily','nestonamadjarskom','brojtelefona','emiliabalazs.ki@gmail.com')""")
-##cursor.execute("""DROP TABLE user""")
 
 @app.route('/home', methods=['get'])
 def home():
