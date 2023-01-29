@@ -25,10 +25,6 @@ app.config["SECRET_KEY"]="SECRET_KEY"
 
 
 CORS(app)
-##"C:\\git\\DRS_PROJEKAT\\ENGINE\\forum.db"                                           --Cvijetin
-##"D:\\Fakultet\\CETVRTA GODINA\\DRS\\PROJEKAT\\DRS_PROJEKAT\\ENGINE\\forum.db"       --Emilija
-##"C:\\Users\\Pantex\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"              --Miloš
-##"C:\\Users\\gifaa\\OneDrive\\Documents\\GitHub\\DRS_PROJEKAT\\ENGINE\\forum.db"      --Igor
 
 
 database = create_connection("./instance/forum.db")
@@ -390,8 +386,7 @@ def addcomment():
       #for element in emails:
       p1 = Process(target=SendHTML, args=(emails, user["username"],newComment['desc'], tema, newid))
       p1.start()
-      print("Hi from process ", current_process().name, "(main process 7)")
-      p1.join()
+
          #p1.start()
       #SendHTML(emails, user["username"],newComment['desc'], tema)
 

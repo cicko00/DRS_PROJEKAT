@@ -1,7 +1,7 @@
 version: '3'
 services:
   flask:
-    image: python3-image
+    image: pythonflask-image
     ports:
       - "5000:5000"
     environment:
@@ -10,14 +10,14 @@ services:
     volumes:
       - ./ENGINE:/app
     command: flask run --host=0.0.0.0
-  angular:
-    image: angular-image
-    ports:
-      - "4200:4200"
-    volumes:
-      - ./UI/src:/app/src
-      - ./UI/node_modules:/app/node_modules
-    command: ng serve --host 0.0.0.0 --prod
+  #angular:
+   # image: angular-image
+    #ports:
+    #  - "4200:4200"
+    #volumes:
+    #  - ./UI/src:/app/src
+    #  - ./UI/node_modules:/app/node_modules
+    #command: ng serve --host 0.0.0.0 --prod
  # db:
    # image: sqlite11-image
    # volumes:

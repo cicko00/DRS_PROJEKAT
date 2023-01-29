@@ -237,11 +237,13 @@ searchPosts()
 {
   
   this.posts=JSON.parse(JSON.stringify(this.post_temp))
+  var postt:Post[] = [];
   this.posts.forEach(post=>{
-    if(!post.title.toLowerCase().includes((this.searchform.value.searchField)?.toLowerCase() as string)){
+    if(post.title.toLowerCase().includes(((this.searchform.value.searchField) as string).toLowerCase()) == true){
       
-      this.posts.splice(this.posts.indexOf(post),1)
+      postt.push(post)
     }
+    this.posts = postt;
   })
 
   
